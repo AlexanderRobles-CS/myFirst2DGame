@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -14,6 +15,7 @@ public class Player extends Entity{
 	GamePanel gp;
 	KeyHandler keyH;
 	int afkCounter;
+	float opacity;
 	
 	public Player(GamePanel gp, KeyHandler keyH) {
 		
@@ -30,6 +32,7 @@ public class Player extends Entity{
 		y = 100;
 		speed = 6;
 		afkCounter = 0;
+		opacity = 0.4f;
 	}
 	
 	public void getPlayerImage(){
@@ -183,6 +186,8 @@ public class Player extends Entity{
 			break;
 		
 		}
+		
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
 		
 		g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
 		
