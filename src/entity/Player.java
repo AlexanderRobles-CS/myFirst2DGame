@@ -2,6 +2,7 @@ package entity;
 
 import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -17,27 +18,39 @@ public class Player extends Entity{
 	int afkCounter;
 	float opacity;
 	
+	public final int screenX;
+	public final int screenY;
+	
 	public Player(GamePanel gp, KeyHandler keyH) {
 		
 		this.gp = gp;
 		this.keyH = keyH;
 		
+		screenX = gp.screenWidth / 2 - (gp.tileSize / 2);
+		screenY = gp.screenHeight / 2 - (gp.tileSize / 2);
+		
+		solidArea = new Rectangle(0, 0, gp.tileSize, gp.tileSize);
+		
 		setDefaultValues();
 		getPlayerImage();
 		direction = "idle";
+		
 	}
 	
 	public void setDefaultValues() {
-		x = 100;
-		y = 100;
+		
+		worldX = gp.tileSize * 10;
+		worldY = gp.tileSize * 10;
 		speed = 6;
 		afkCounter = 0;
 		opacity = 0.4f;
+		
 	}
 	
 	public void getPlayerImage(){
 		
 		try {
+			
 			idle = ImageIO.read(getClass().getResourceAsStream("/player/player_idle.png"));
 			up0 = ImageIO.read(getClass().getResourceAsStream("/player/player_up_0.png"));
 			up1 = ImageIO.read(getClass().getResourceAsStream("/player/player_up_1.png"));
@@ -53,7 +66,9 @@ public class Player extends Entity{
 			right2 = ImageIO.read(getClass().getResourceAsStream("/player/player_right_2.png"));
 			
 		}catch(IOException e) {
+			
 			e.printStackTrace();
+			
 		}
 	
 	}
@@ -65,56 +80,40 @@ public class Player extends Entity{
 			
 			if (keyH.upPressed == true) {
 				direction = "up";
-				y -= speed;
+				worldY -= speed;
 			}
 			
 			else if (keyH.downPressed == true) {
 				direction = "down";
-				y += speed;
+				worldY += speed;
 			}
 			
 			else if (keyH.leftPressed == true) {
 				direction = "left";
-				x -= speed;
+				worldX -= speed;
 			}
 			
 			else if (keyH.rightPressed == true) {
 				direction = "right";
-				x += speed;
+				worldX += speed;
 			}
 			
+			afkCounter = 0;
 			spriteCounter++;
-			afkCounter++;
 			
 			if (spriteCounter > 12) {
+	            spriteNum = (spriteNum + 1) % 3; // Cycle spriteNum between 0, 1, 2
+	            spriteCounter = 0;
+	        }
 				
-				if(spriteNum == 0) {
-					spriteNum = 1;
-				}
-				
-				else if(spriteNum == 1) {
-					spriteNum = 2;
-				}
-				
-				else if(spriteNum == 2) {
-					spriteNum = 0;
-				}
-				
-				spriteCounter = 0;
-			}
-				
-		}
-		
-		if (keyH.afk) {
-			afkCounter++;
 		}
 		
 		else {
-			afkCounter = 0;
-		}
-		
-		if (afkCounter > 180) {
-			direction = "idle";
+			afkCounter++;
+			
+			if (afkCounter > 180) {
+				direction = "idle";
+			}
 		}
 		
 	}
@@ -123,73 +122,34 @@ public class Player extends Entity{
 		
 		BufferedImage image = null;
 		
-		switch(direction) {
-		
-		case "up":
-			if (spriteNum == 0) {
-				image = up0;
-			}
-			
-			if (spriteNum == 1) {
-				image = up1;
-			}
-			
-			if (spriteNum == 2) {
-				image = up2;	
-			}
-			break;
-			
-		case "down":
-			if (spriteNum == 0) {
-				image = down0;
-			}
-			
-			if (spriteNum == 1) {
-				image = down1;
-			}
-			
-			if (spriteNum == 2) {
-				image = down2;	
-			}
-			break;
-			
-		case "left":
-			if (spriteNum == 0) {
-				image = left0;
-			}
-			
-			if (spriteNum == 1) {
-				image = left1;
-			}
-			
-			if (spriteNum == 2) {
-				image = left2;	
-			}
-			break;
-			
-		case "right":
-			if (spriteNum == 0) {
-				image = right0;
-			}
-			
-			if (spriteNum == 1) {
-				image = right1;
-			}
-			
-			if (spriteNum == 2) {
-				image = right2;	
-			}
-			break;
-			
-		case "idle":
-			image = idle;
-			break;
-		
-		}
+		// Update the image based on the direction
+	    switch (direction) {
+	        case "up":
+	            image = (spriteNum == 0) ? up0 : (spriteNum == 1) ? up1 : up2;
+	            break;
+
+	        case "down":
+	            image = (spriteNum == 0) ? down0 : (spriteNum == 1) ? down1 : down2;
+	            break;
+
+	        case "left":
+	            image = (spriteNum == 0) ? left0 : (spriteNum == 1) ? left1 : left2;
+	            break;
+
+	        case "right":
+	            image = (spriteNum == 0) ? right0 : (spriteNum == 1) ? right1 : right2;
+	            break;
+
+	        case "idle":
+	            image = idle;
+	            break;
+
+	        default:
+	            break;
+	    }
 		
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
-		
-		g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+		g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
 		
 	}
 

@@ -14,24 +14,27 @@ public class KeyHandler implements KeyListener{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		afk = false;
 		int code = e.getKeyCode();
 		
 		switch (code) {
 	    case KeyEvent.VK_W:
 	    	upPressed = true;
+	    	afk = false;
 	        break;
 	        
 	    case KeyEvent.VK_S:
 	        downPressed = true;
+	        afk = false;
 	        break;
 	        
 	    case KeyEvent.VK_A:
 	    	leftPressed = true;
+	    	afk = false;
 	        break;
 	        
 	    case KeyEvent.VK_D:
 	    	rightPressed = true;
+	    	afk = false;
 	        break;
 
 	    default:
@@ -43,25 +46,28 @@ public class KeyHandler implements KeyListener{
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		afk = true;
 		int code = e.getKeyCode();
 		
 		switch (code) {
 		
 	    case KeyEvent.VK_W:
 	    	upPressed = false;
+	    	afk = true;
 	        break;
 	        
 	    case KeyEvent.VK_S:
 	        downPressed = false;
+	        afk = true;
 	        break;
 	        
 	    case KeyEvent.VK_A:
 	    	leftPressed = false;
+	    	afk = true;
 	        break;
 	        
 	    case KeyEvent.VK_D:
 	    	rightPressed = false;
+	    	afk = true;
 	        break;
 
 	    default:

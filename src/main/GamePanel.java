@@ -13,14 +13,20 @@ import tile.TileManager;
 public class GamePanel extends JPanel implements Runnable{
 	
 	// SCREEN SETTINGS 
-	final int originalTileSize = 16;                         // 16x16 tile
-	final int scale = 6;
+	final int originalTileSize = 16;    // 16x16 tile
+	final int scale = 3;
 	
-	public final int tileSize = originalTileSize * scale;    // 48x48 tile
-	final int maxScreenCol = 16;
-	final int maxScreenRow = 12;
-	final int screenWidth = tileSize * maxScreenCol;        // 768 pixels
-	final int screenHeight = tileSize * maxScreenRow;       // 576 pixels
+	public final int tileSize = originalTileSize * scale;
+	public final int maxScreenCol = 16;
+	public final int maxScreenRow = 12;
+	public final int screenWidth = tileSize * maxScreenCol;
+	public final int screenHeight = tileSize * maxScreenRow;
+	
+	// WORLD SETTINGS
+	public final int maxWorldCol = 50;
+	public final int maxWorldRow = 50;
+	public final int worldWidth = tileSize * maxWorldCol;
+	public final int worldHeight = tileSize * maxWorldRow;
 	
 	// FPS
 	int FPS = 60;
@@ -28,7 +34,7 @@ public class GamePanel extends JPanel implements Runnable{
 	TileManager tileM = new TileManager(this);
 	KeyHandler keyH = new KeyHandler();
 	Thread gameThread;
-	Player player = new Player(this, keyH);
+	public Player player = new Player(this, keyH);
 	
 	public GamePanel() {
 		
@@ -48,7 +54,6 @@ public class GamePanel extends JPanel implements Runnable{
 	}
 	
 	public void update() {
-		
 		player.update();
 		
 	}
@@ -87,7 +92,6 @@ public class GamePanel extends JPanel implements Runnable{
 			lastTime = currentTime;
 			
 			if(delta > 1) {
-				
 				update();
 				repaint();
 				delta--;
@@ -96,7 +100,6 @@ public class GamePanel extends JPanel implements Runnable{
 			}
 			
 			if (timer > 1000000000) {
-				
 				System.out.println("FPS: " + drawCount);
 				drawCount = 0;
 				timer = 0;
