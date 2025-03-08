@@ -14,15 +14,15 @@ public class AssetSetter {
 	
 	public void setObject() {
 		
-		gp.obj[0] = new OBJ_Light_Orb();
+		gp.obj[0] = new OBJ_Light_Orb(gp);
 		gp.obj[0].worldX = 5 * gp.tileSize;
 		gp.obj[0].worldY = 5 * gp.tileSize;
 		
-		gp.obj[1] = new OBJ_Rune_Door();
+		gp.obj[1] = new OBJ_Rune_Door(gp);
 		gp.obj[1].worldX = 7 * gp.tileSize;
 		gp.obj[1].worldY = 7 * gp.tileSize;
 		
-		gp.obj[2] = new OBJ_Rune_Step();
+		gp.obj[2] = new OBJ_Rune_Step(gp);
 		gp.obj[2].worldX = 9 * gp.tileSize;
 		gp.obj[2].worldY = 9 * gp.tileSize;
 

@@ -1,6 +1,10 @@
 package entity;
 
 import java.awt.AlphaComposite;
+
+import object.OBJ_Rune_Door;
+import object.OBJ_Rune_Step;
+
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -17,6 +21,8 @@ public class Player extends Entity{
 	KeyHandler keyH;
 	int afkCounter;
 	float opacity;
+	int hasOrb = 0;
+	boolean doorActivated = false;
 	
 	public final int screenX;
 	public final int screenY;
@@ -104,6 +110,10 @@ public class Player extends Entity{
 			collisionOn = false;
 			gp.cChecker.checkTile(this);
 			
+			// CHECK OBJECT COLLISION
+			int objIndex = gp.cChecker.checkObject(this, true);
+			pickUpObject(objIndex);
+			
 			// IF COLLISION IS FALSE, PLAYER CAN MOVE
 			if(collisionOn == false) {
 				switch(direction) {
@@ -132,6 +142,40 @@ public class Player extends Entity{
 			}
 		}
 		
+	}
+	
+	public void pickUpObject(int i) {
+		
+		if(i != 999) {
+			
+			String objectName = gp.obj[i].name;
+			
+			switch(objectName) {
+			case "lightOrb":
+				hasOrb++;
+				gp.obj[i] = null;
+				System.out.println("Orbs: " + hasOrb);
+				break;
+			case "runeDoor":
+				if (doorActivated) {
+					((OBJ_Rune_Door) gp.obj[i]).runeDoorActivated = true;
+				}
+				
+				break;
+			case "runeStep":
+				if(hasOrb > 0) {
+					doorActivated = true;
+					hasOrb--;
+					System.out.println("Orbs: " + hasOrb);
+					((OBJ_Rune_Step) gp.obj[i]).runeStepActivated = true;
+				}
+				
+				else if(!((OBJ_Rune_Step) gp.obj[i]).runeStepActivated){
+					System.out.println("Need orb to activate rune...");
+				}
+				break;
+			}
+		}
 	}
 	
 	public void draw(Graphics2D g2) {

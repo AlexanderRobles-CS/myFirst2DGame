@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 
 import entity.Player;
 import object.OBJ_Light_Orb;
+import object.OBJ_Rune_Door;
+import object.OBJ_Rune_Step;
 import object.SuperObject;
 import tile.TileManager;
 
@@ -70,6 +72,18 @@ public class GamePanel extends JPanel implements Runnable{
 	            if (obj[i] instanceof OBJ_Light_Orb) {
 	                ((OBJ_Light_Orb) obj[i]).update();
 	            }
+	            
+	            if (obj[i] instanceof OBJ_Rune_Step) {
+	            	if (((OBJ_Rune_Step) obj[i]).runeStepActivated == true) {
+	            		((OBJ_Rune_Step) obj[i]).update();
+	            	}
+	            }
+	            
+	            if (obj[i] instanceof OBJ_Rune_Door) {
+	            	if (((OBJ_Rune_Door) obj[i]).runeDoorActivated == true) {
+	            		((OBJ_Rune_Door) obj[i]).update();
+	            	}
+	            }
 	        }
 	    }
 	}
@@ -125,7 +139,7 @@ public class GamePanel extends JPanel implements Runnable{
 			}
 			
 			if (timer > 1000000000) {
-				System.out.println("FPS: " + drawCount);
+//				System.out.println("FPS: " + drawCount);
 				drawCount = 0;
 				timer = 0;
 				

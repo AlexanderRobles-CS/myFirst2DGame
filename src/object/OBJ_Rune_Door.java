@@ -10,21 +10,24 @@ import main.GamePanel;
 
 public class OBJ_Rune_Door extends SuperObject{
 	
-	private BufferedImage[] orbImages = new BufferedImage[3];
+	private BufferedImage[] orbImages = new BufferedImage[5];
     private int currentFrame = 0;
     private int frameCounter = 0;
+    
+    public boolean runeDoorActivated = false;
+    public boolean isAnimationComplete = false;
 
-    public OBJ_Rune_Door() {
+    public OBJ_Rune_Door(GamePanel gp) {
+    	super(gp);
         name = "runeDoor";
-        this.collision = true;
+        collision = true;
         loadOrbImages();
     }
 
     private void loadOrbImages() {
         try {
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 5; i++) {
                 orbImages[i] = ImageIO.read(getClass().getResource("/objects/rune_door_" + i + ".png"));
-                System.out.println("DOOR");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -32,11 +35,21 @@ public class OBJ_Rune_Door extends SuperObject{
     }
 
     public void update() {
-        frameCounter++;
-        if (frameCounter >= 10) {
-            currentFrame = (currentFrame + 1) % 3;
-            frameCounter = 0;
-        }
+    	if(runeDoorActivated && !isAnimationComplete) {
+    		frameCounter++;
+            if (frameCounter >= 50) {
+                currentFrame = (currentFrame + 1) % 5;
+                frameCounter = 0;
+                System.out.println("Animating door...");
+                
+             // Check if animation reached the last frame
+                if (currentFrame == 4) {
+                    isAnimationComplete = true;
+                    System.out.println("Door animation complete");
+                    collision = false;
+                }
+            }
+    	}
     }
 
     @Override

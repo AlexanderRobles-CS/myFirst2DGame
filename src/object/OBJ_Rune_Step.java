@@ -13,10 +13,14 @@ public class OBJ_Rune_Step extends SuperObject{
 	private BufferedImage[] orbImages = new BufferedImage[3];
     private int currentFrame = 0;
     private int frameCounter = 0;
+    
+    public boolean runeStepActivated = false;
+    private boolean isAnimationComplete = false;
 
-    public OBJ_Rune_Step() {
+    public OBJ_Rune_Step(GamePanel gp) {
+    	super(gp);
         name = "runeStep";
-        this.collision = false;
+        collision = false;
         loadOrbImages();
     }
 
@@ -31,11 +35,19 @@ public class OBJ_Rune_Step extends SuperObject{
     }
 
     public void update() {
-        frameCounter++;
-        if (frameCounter >= 10) {
-            currentFrame = (currentFrame + 1) % 3;
-            frameCounter = 0;
-        }
+    	if(runeStepActivated && !isAnimationComplete) {
+    		frameCounter++;
+            if (frameCounter >= 50) {
+                currentFrame = (currentFrame + 1) % 3;
+                frameCounter = 0;
+                System.out.println("Animating rune step...");
+                
+                if (currentFrame == 2) {
+                    isAnimationComplete = true;
+                    System.out.println("Rune step animation complete");
+                }
+            }
+    	}
     }
 
     @Override

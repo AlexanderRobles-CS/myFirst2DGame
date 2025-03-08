@@ -12,10 +12,12 @@ public class OBJ_Light_Orb extends SuperObject {
     private BufferedImage[] orbImages = new BufferedImage[3];
     private int currentFrame = 0;
     private int frameCounter = 0;
+    private boolean increasing = true;
 
-    public OBJ_Light_Orb() {
+    public OBJ_Light_Orb(GamePanel gp) {
+    	super(gp);
         name = "lightOrb";
-        this.collision = false;
+        collision = false;
         loadOrbImages();
     }
 
@@ -31,11 +33,23 @@ public class OBJ_Light_Orb extends SuperObject {
 
     public void update() {
         frameCounter++;
-        if (frameCounter >= 10) {
-            currentFrame = (currentFrame + 1) % 3;
+        if (frameCounter >= 25) {
+            if (currentFrame == 2) {
+                increasing = false; // Change direction when reaching the max value
+            } else if (currentFrame == 0) {
+                increasing = true; // Change direction when reaching the min value
+            }
+
+            if (increasing) {
+                currentFrame++;  // Increase frame
+            } else {
+                currentFrame--;  // Decrease frame
+            }
+
             frameCounter = 0;
         }
     }
+
 
     @Override
     public void draw(Graphics2D g2, GamePanel gp) {
