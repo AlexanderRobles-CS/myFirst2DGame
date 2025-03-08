@@ -21,7 +21,7 @@ public class Player extends Entity{
 	KeyHandler keyH;
 	int afkCounter;
 	float opacity;
-	int hasOrb = 0;
+	public int orbCount = 0;
 	boolean doorActivated = false;
 	
 	public final int screenX;
@@ -153,19 +153,19 @@ public class Player extends Entity{
 			switch(objectName) {
 			case "lightOrb":
 				gp.playSE(1);
-				hasOrb++;
+				orbCount++;
 				gp.obj[i] = null;
-				System.out.println("Orbs: " + hasOrb);
+				gp.ui.showMessage("Orb aquired.");
 				break;
 				
 			case "runeDoor":
 				break;
 				
 			case "runeStep":
-			    if(hasOrb > 0 && !((OBJ_Rune_Step) gp.obj[i]).runeStepActivated) {
-			        hasOrb--;
+			    if(orbCount > 0 && !((OBJ_Rune_Step) gp.obj[i]).runeStepActivated) {
+			        orbCount--;
 			        ((OBJ_Rune_Step) gp.obj[i]).runeStepActivated = true;
-			        System.out.println("Rune step activated!");
+			        gp.ui.showMessage("Rune activated!");
 			        gp.playSE(2);
 
 			        // Find the nearest rune door and activate a rune on it
@@ -174,19 +174,21 @@ public class Player extends Entity{
 			                OBJ_Rune_Door door = (OBJ_Rune_Door) gp.obj[j];
 
 			                // Check if the door is nearby
-			                if (Math.abs(door.worldX - worldX) < gp.tileSize * 5 &&
-			                    Math.abs(door.worldY - worldY) < gp.tileSize * 5) {
+			                if (Math.abs(door.worldX - worldX) < gp.tileSize * 10 &&
+			                    Math.abs(door.worldY - worldY) < gp.tileSize * 10) {
 			                    door.activateRune();
+			                    
 			                    // check if door nearby is activated
 				                if(door.runeDoorActivated) {
 				                	gp.playSE(3);
+				                    gp.ui.showMessage("Door has been activated!");
 				                }
 			                    break;
 			                }
 			            }
 			        }
 			    } else if (!((OBJ_Rune_Step) gp.obj[i]).runeStepActivated) {
-			        System.out.println("Need orb to activate rune...");
+			    	gp.ui.showMessage("Need orb to activate rune.");
 			    }
 			    break;
 

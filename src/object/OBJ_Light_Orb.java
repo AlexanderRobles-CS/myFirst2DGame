@@ -9,7 +9,7 @@ import main.GamePanel;
 
 public class OBJ_Light_Orb extends SuperObject {
     
-    private BufferedImage[] orbImages = new BufferedImage[3];
+    public BufferedImage[] orbImages = new BufferedImage[3];
     private int currentFrame = 0;
     private int frameCounter = 0;
     private boolean increasing = true;
@@ -23,6 +23,7 @@ public class OBJ_Light_Orb extends SuperObject {
 
     private void loadOrbImages() {
         try {
+        	image = ImageIO.read(getClass().getResource("/objects/light_orb_0.png"));
             for (int i = 0; i < 3; i++) {
                 orbImages[i] = ImageIO.read(getClass().getResource("/objects/light_orb_" + i + ".png"));
             }

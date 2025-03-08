@@ -41,11 +41,9 @@ public class OBJ_Rune_Door extends SuperObject{
     {
     	if (!runeDoorActivated) {
             activatedRunes++;
-            System.out.println("Runes activated for door: " + activatedRunes + "/" + requiredRunes);
 
             if (activatedRunes >= requiredRunes) {
                 runeDoorActivated = true;
-                System.out.println("Door unlocking...");
             }
         }
     }
@@ -55,12 +53,10 @@ public class OBJ_Rune_Door extends SuperObject{
             if (frameCounter >= 50) {
                 currentFrame = (currentFrame + 1) % 5;
                 frameCounter = 0;
-                System.out.println("Animating door...");
                 
              // Check if animation reached the last frame
                 if (currentFrame == 4) {
                     isAnimationComplete = true;
-                    System.out.println("Door animation complete");
                     collision = false;
                 }
             }
