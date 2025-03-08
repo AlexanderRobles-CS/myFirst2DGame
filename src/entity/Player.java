@@ -152,28 +152,58 @@ public class Player extends Entity{
 			
 			switch(objectName) {
 			case "lightOrb":
+				gp.playSE(1);
 				hasOrb++;
 				gp.obj[i] = null;
 				System.out.println("Orbs: " + hasOrb);
 				break;
+				
 			case "runeDoor":
-				if (doorActivated) {
-					((OBJ_Rune_Door) gp.obj[i]).runeDoorActivated = true;
-				}
-				
 				break;
+				
 			case "runeStep":
-				if(hasOrb > 0) {
-					doorActivated = true;
-					hasOrb--;
-					System.out.println("Orbs: " + hasOrb);
-					((OBJ_Rune_Step) gp.obj[i]).runeStepActivated = true;
-				}
+			    if(hasOrb > 0 && !((OBJ_Rune_Step) gp.obj[i]).runeStepActivated) {
+			        hasOrb--;
+			        ((OBJ_Rune_Step) gp.obj[i]).runeStepActivated = true;
+			        System.out.println("Rune step activated!");
+			        gp.playSE(2);
+
+			        // Find the nearest rune door and activate a rune on it
+			        for (int j = 0; j < gp.obj.length; j++) {
+			            if (gp.obj[j] instanceof OBJ_Rune_Door) {
+			                OBJ_Rune_Door door = (OBJ_Rune_Door) gp.obj[j];
+
+			                // Check if the door is nearby
+			                if (Math.abs(door.worldX - worldX) < gp.tileSize * 5 &&
+			                    Math.abs(door.worldY - worldY) < gp.tileSize * 5) {
+			                    door.activateRune();
+			                    // check if door nearby is activated
+				                if(door.runeDoorActivated) {
+				                	gp.playSE(3);
+				                }
+			                    break;
+			                }
+			            }
+			        }
+			    } else if (!((OBJ_Rune_Step) gp.obj[i]).runeStepActivated) {
+			        System.out.println("Need orb to activate rune...");
+			    }
+			    break;
+
 				
-				else if(!((OBJ_Rune_Step) gp.obj[i]).runeStepActivated){
-					System.out.println("Need orb to activate rune...");
-				}
+			case "pitfall":
+				System.out.println("Pitfall!");
+				
+				// TODO pitfall action
 				break;
+				
+			case "stairs":
+				System.out.println("Stairs!");
+				
+				// TODO pitfall action
+				// load new map
+				// reset world
+				break;	
 			}
 		}
 	}

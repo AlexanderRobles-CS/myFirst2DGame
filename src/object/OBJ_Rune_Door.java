@@ -15,8 +15,11 @@ public class OBJ_Rune_Door extends SuperObject{
     private int frameCounter = 0;
     
     public boolean runeDoorActivated = false;
+    public final int requiredRunes = 3;
+    public int activatedRunes = 0;
+    
     public boolean isAnimationComplete = false;
-
+   
     public OBJ_Rune_Door(GamePanel gp) {
     	super(gp);
         name = "runeDoor";
@@ -33,7 +36,19 @@ public class OBJ_Rune_Door extends SuperObject{
             e.printStackTrace();
         }
     }
+    
+    public void activateRune()
+    {
+    	if (!runeDoorActivated) {
+            activatedRunes++;
+            System.out.println("Runes activated for door: " + activatedRunes + "/" + requiredRunes);
 
+            if (activatedRunes >= requiredRunes) {
+                runeDoorActivated = true;
+                System.out.println("Door unlocking...");
+            }
+        }
+    }
     public void update() {
     	if(runeDoorActivated && !isAnimationComplete) {
     		frameCounter++;
