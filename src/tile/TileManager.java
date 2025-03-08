@@ -47,12 +47,8 @@ public class TileManager {
 			tile[3].collision = true;
 			
 			tile[4] = new Tile();
-			tile[4].image = ImageIO.read(getClass().getResource("/tiles/rune.png"));
+			tile[4].image = ImageIO.read(getClass().getResource("/tiles/stairs.png"));
 			tile[4].collision = true;
-			
-			tile[5] = new Tile();
-			tile[5].image = ImageIO.read(getClass().getResource("/tiles/stairs.png"));
-			tile[5].collision = true;
 			
 		}catch(IOException e) {
 			

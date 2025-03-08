@@ -32,6 +32,8 @@ public class Player extends Entity{
 		solidArea = new Rectangle();
 		solidArea.x = gp.tileSize / 6;
 		solidArea.y = gp.tileSize / 3;
+		solidAreaDefaultX = solidArea.x;
+		solidAreaDefaultY = solidArea.y;
 		solidArea.width = gp.tileSize - (gp.tileSize / 3);
 		solidArea.height = gp.tileSize - (gp.tileSize / 3);
 		
@@ -43,8 +45,8 @@ public class Player extends Entity{
 	
 	public void setDefaultValues() {
 		
-		worldX = gp.tileSize * 10;
-		worldY = gp.tileSize * 10;
+		worldX = gp.tileSize * 12;
+		worldY = gp.tileSize * 12;
 		speed = 6;
 		afkCounter = 0;
 		opacity = 0.4f;

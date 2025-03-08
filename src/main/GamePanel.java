@@ -8,6 +8,8 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 import entity.Player;
+import object.OBJ_Light_Orb;
+import object.SuperObject;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -35,7 +37,9 @@ public class GamePanel extends JPanel implements Runnable{
 	KeyHandler keyH = new KeyHandler();
 	Thread gameThread;
 	public CollisionChecker cChecker = new CollisionChecker(this);
+	public AssetSetter aSetter = new AssetSetter(this);
 	public Player player = new Player(this, keyH);
+	public SuperObject obj[] = new SuperObject[10];
 	
 	public GamePanel() {
 		
@@ -47,26 +51,46 @@ public class GamePanel extends JPanel implements Runnable{
 		
 	}
 	
+	public void setupGame() {
+		aSetter.setObject();
+	}
+	
 	public void startGameThread() {
 		
 		gameThread = new Thread(this);
-		gameThread.run();
+		gameThread.start();
 		
 	}
 	
 	public void update() {
-		player.update();
-		
+	    player.update();
+
+	    for (int i = 0; i < obj.length; i++) {
+	        if (obj[i] != null) {
+	            if (obj[i] instanceof OBJ_Light_Orb) {
+	                ((OBJ_Light_Orb) obj[i]).update();
+	            }
+	        }
+	    }
 	}
+
 	
 	public void paintComponent(Graphics g) {
 		
 		super.paintComponent(g);
-		
 		Graphics2D g2 = (Graphics2D) g;
 		
+		// TILE
 		tileM.draw(g2);
 		
+		// OBJECT
+		for(int i = 0; i < obj.length; i++) {
+			if(obj[i] != null) {
+				obj[i].draw(g2, this);
+			}
+		}
+		
+		// PLAYER
 		player.draw(g2);
 		
 		g2.dispose();
