@@ -156,7 +156,7 @@ public class Player extends Entity{
 				orbCount++;
 				gp.obj[i] = null;
 				gp.ui.showMessage("Orb aquired.");
-				break;
+				break; // HELLO
 				
 			case "runeDoor":
 				break;
