@@ -161,7 +161,6 @@ public class Player extends Entity{
 				gp.playSE(1);
 				orbCount++;
 				gp.obj[i] = null;
-				gp.ui.showMessage("Orb aquired.");
 				break;
 				
 			case "runeDoor":
@@ -171,7 +170,6 @@ public class Player extends Entity{
 			    if(orbCount > 0 && !((OBJ_Rune_Step) gp.obj[i]).runeStepActivated) {
 			        orbCount--;
 			        ((OBJ_Rune_Step) gp.obj[i]).runeStepActivated = true;
-			        gp.ui.showMessage("Rune activated!");
 			        gp.playSE(2);
 
 			        // Find the nearest rune door and activate a rune on it
@@ -187,14 +185,11 @@ public class Player extends Entity{
 			                    // check if door nearby is activated
 				                if(door.runeDoorActivated) {
 				                	gp.playSE(3);
-				                    gp.ui.showMessage("Door has been activated!");
 				                }
 			                    break;
 			                }
 			            }
 			        }
-			    } else if (!((OBJ_Rune_Step) gp.obj[i]).runeStepActivated) {
-			    	gp.ui.showMessage("Need orb to activate rune.");
 			    }
 			    break;
 

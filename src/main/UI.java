@@ -10,8 +10,11 @@ import object.OBJ_Light_Orb;
 public class UI {
 	
 	GamePanel gp;
+	Graphics2D g2;
 	Font courier_new_25;
-	BufferedImage lightOrbImage;
+	
+	public static final int PLAY_STATE = 1;
+    public static final int PAUSE_STATE = 2;
 	
 	public boolean messageOn = false;
 	public String message = "";
@@ -20,9 +23,6 @@ public class UI {
 	public UI(GamePanel gp) {
 		this.gp = gp;
 		courier_new_25 = new Font("Courier New", Font.PLAIN, 25);
-		
-		OBJ_Light_Orb lightOrb = new OBJ_Light_Orb(gp);
-	    lightOrbImage = lightOrb.image;
 	    
 	}
 	
@@ -32,29 +32,33 @@ public class UI {
 	}
 	
 	public void draw(Graphics2D g2) {
+		this.g2 = g2;
 		
 		g2.setFont(courier_new_25);
 		g2.setColor(Color.white);
 		
-		int orbSize = gp.tileSize * 3 / 4; // Scale down to 75% of tile size
-		int orbX = gp.tileSize / 2 + (gp.tileSize - orbSize) / 2; // Center it
-		int orbY = gp.tileSize / 2 + (gp.tileSize - orbSize) / 2;
-
-		g2.drawImage(lightOrbImage, orbX, orbY, orbSize, orbSize, null);
-		g2.drawString("x " + gp.player.orbCount, 75, 50);
+		switch(gp.gameState) {
 		
-		// MESSAGE
-		if(messageOn) {
-			g2.setFont(g2.getFont().deriveFont(20f));
-			g2.drawString(message, gp.tileSize / 2, gp.tileSize * 5);
+		case PLAY_STATE:
+			break;
 			
-			messageCounter++;
-			
-			if(messageCounter > 120) {
-				messageCounter = 0;
-				messageOn = false;
-			}
+		case PAUSE_STATE:
+			drawPauseScreen();
+			break;
 		}
 	}
 	
+	public void drawPauseScreen() {
+		String text = "PAUSED";
+		int x = getXForCenteredText(text);
+		int y = gp.screenHeight / 2;
+		
+		g2.drawString(text, x, y);
+	}
+	
+	public int getXForCenteredText(String text) {
+		int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+		int x = gp.screenWidth / 2 - length / 2;
+		return x;
+	}
 }
