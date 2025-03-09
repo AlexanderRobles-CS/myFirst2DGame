@@ -15,7 +15,7 @@ public class OBJ_Light_Orb extends SuperObject {
     private boolean increasing = true;
 
     public OBJ_Light_Orb(GamePanel gp) {
-    	super(gp);
+        super(gp);
         name = "lightOrb";
         collision = false;
         loadOrbImages();
@@ -23,10 +23,11 @@ public class OBJ_Light_Orb extends SuperObject {
 
     private void loadOrbImages() {
         try {
-        	image = ImageIO.read(getClass().getResource("/objects/light_orb_0.png"));
             for (int i = 0; i < 3; i++) {
-                orbImages[i] = ImageIO.read(getClass().getResource("/objects/light_orb_" + i + ".png"));
+            	orbImages[i] = ImageIO.read(getClass().getResource("/objects/light_orb_" + i + ".png"));
+                orbImages[i] = uTool.scaleImage(orbImages[i], gp.tileSize, gp.tileSize, false);
             }
+            image = orbImages[0];
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -35,22 +36,13 @@ public class OBJ_Light_Orb extends SuperObject {
     public void update() {
         frameCounter++;
         if (frameCounter >= 25) {
-            if (currentFrame == 2) {
-                increasing = false; // Change direction when reaching the max value
-            } else if (currentFrame == 0) {
-                increasing = true; // Change direction when reaching the min value
-            }
+            if (currentFrame == 2) increasing = false;
+            else if (currentFrame == 0) increasing = true;
 
-            if (increasing) {
-                currentFrame++;  // Increase frame
-            } else {
-                currentFrame--;  // Decrease frame
-            }
-
+            currentFrame += increasing ? 1 : -1;
             frameCounter = 0;
         }
     }
-
 
     @Override
     public void draw(Graphics2D g2, GamePanel gp) {

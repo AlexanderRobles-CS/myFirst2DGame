@@ -16,6 +16,7 @@ public class OBJ_Pitfall extends SuperObject{
         
         try {
             image = ImageIO.read(getClass().getResource("/objects/pitfall.png"));
+            image = uTool.scaleImage(image, gp.tileSize, gp.tileSize, false);
             
        } catch (IOException e) {
            e.printStackTrace();

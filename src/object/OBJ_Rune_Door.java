@@ -10,7 +10,7 @@ import main.GamePanel;
 
 public class OBJ_Rune_Door extends SuperObject{
 	
-	private BufferedImage[] orbImages = new BufferedImage[5];
+	private BufferedImage[] doorImages = new BufferedImage[5];
     private int currentFrame = 0;
     private int frameCounter = 0;
     
@@ -24,14 +24,16 @@ public class OBJ_Rune_Door extends SuperObject{
     	super(gp);
         name = "runeDoor";
         collision = true;
-        loadOrbImages();
+        loadDoorImages();
     }
 
-    private void loadOrbImages() {
+    private void loadDoorImages() {
         try {
             for (int i = 0; i < 5; i++) {
-                orbImages[i] = ImageIO.read(getClass().getResource("/objects/rune_door_" + i + ".png"));
+            	doorImages[i] = ImageIO.read(getClass().getResource("/objects/rune_door_" + i + ".png"));
+            	doorImages[i] = uTool.scaleImage(doorImages[i], gp.tileSize, gp.tileSize, false);
             }
+            image = doorImages[0];
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -65,7 +67,7 @@ public class OBJ_Rune_Door extends SuperObject{
 
     @Override
     public void draw(Graphics2D g2, GamePanel gp) {
-        image = orbImages[currentFrame];
+        image = doorImages[currentFrame];
         super.draw(g2, gp);
     }
 }

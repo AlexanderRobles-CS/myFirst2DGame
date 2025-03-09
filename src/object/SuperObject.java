@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import main.GamePanel;
+import main.UtilityTool;
 
 public class SuperObject {
 	
@@ -19,7 +20,10 @@ public class SuperObject {
 	public int solidAreaDefaultX = 0;
 	public int solidAreaDefaultY = 0;
 	
+	UtilityTool uTool = new UtilityTool();
+	
 	public SuperObject(GamePanel gp) {
+		this.gp = gp;
 		solidArea = new Rectangle(0, 0, gp.tileSize, gp.tileSize);
 	}
 	
@@ -33,7 +37,7 @@ public class SuperObject {
 					&& worldY + gp.tileSize > gp.player.worldY - gp.player.screenY 
 						&& worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
 			
-			g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+			g2.drawImage(image, screenX, screenY, null);
 		
 		}
 		

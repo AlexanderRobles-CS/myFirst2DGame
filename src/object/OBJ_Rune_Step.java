@@ -10,7 +10,7 @@ import main.GamePanel;
 
 public class OBJ_Rune_Step extends SuperObject{
 	
-	private BufferedImage[] orbImages = new BufferedImage[3];
+	private BufferedImage[] runeStepImages = new BufferedImage[3];
     private int currentFrame = 0;
     private int frameCounter = 0;
     
@@ -27,7 +27,8 @@ public class OBJ_Rune_Step extends SuperObject{
     private void loadOrbImages() {
         try {
             for (int i = 0; i < 3; i++) {
-                orbImages[i] = ImageIO.read(getClass().getResource("/objects/rune_tile_" + i + ".png"));
+            	runeStepImages[i] = ImageIO.read(getClass().getResource("/objects/rune_tile_" + i + ".png"));
+            	runeStepImages[i] = uTool.scaleImage(runeStepImages[i], gp.tileSize, gp.tileSize, false);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -50,7 +51,7 @@ public class OBJ_Rune_Step extends SuperObject{
 
     @Override
     public void draw(Graphics2D g2, GamePanel gp) {
-        image = orbImages[currentFrame];
+        image = runeStepImages[currentFrame];
         super.draw(g2, gp);
     }
 }

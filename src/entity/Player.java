@@ -1,6 +1,5 @@
 package entity;
 
-import java.awt.AlphaComposite;
 
 import object.OBJ_Rune_Door;
 import object.OBJ_Rune_Step;
@@ -14,13 +13,13 @@ import javax.imageio.ImageIO;
 
 import main.GamePanel;
 import main.KeyHandler;
+import main.UtilityTool;
 
 public class Player extends Entity{
 	
 	GamePanel gp;
 	KeyHandler keyH;
 	int afkCounter;
-	float opacity;
 	public int orbCount = 0;
 	boolean doorActivated = false;
 	
@@ -55,34 +54,41 @@ public class Player extends Entity{
 		worldY = gp.tileSize * 12;
 		speed = 6;
 		afkCounter = 0;
-		opacity = 0.4f;
 		
 	}
 	
 	public void getPlayerImage(){
 		
+		idle = setup("player_idle");
+		up0 = setup("player_up_0");
+		up1 = setup("player_up_1");
+		up2 = setup("player_up_2");
+		down0 = setup("player_down_0");
+		down1 = setup("player_down_1");
+		down2 = setup("player_down_2");
+		left0 = setup("player_left_0");
+		left1 = setup("player_left_1");
+		left2 = setup("player_left_2");
+		right0 = setup("player_right_0");
+		right1 = setup("player_right_1");
+		right2 = setup("player_right_2");
+	
+	}
+	
+	public BufferedImage setup(String imageName) {
+		
+		UtilityTool uTool = new UtilityTool();
+		BufferedImage image = null;
+		
 		try {
-			
-			idle = ImageIO.read(getClass().getResourceAsStream("/player/player_idle.png"));
-			up0 = ImageIO.read(getClass().getResourceAsStream("/player/player_up_0.png"));
-			up1 = ImageIO.read(getClass().getResourceAsStream("/player/player_up_1.png"));
-			up2 = ImageIO.read(getClass().getResourceAsStream("/player/player_up_2.png"));
-			down0 = ImageIO.read(getClass().getResourceAsStream("/player/player_down_0.png"));
-			down1 = ImageIO.read(getClass().getResourceAsStream("/player/player_down_1.png"));
-			down2 = ImageIO.read(getClass().getResourceAsStream("/player/player_down_2.png"));
-			left0 = ImageIO.read(getClass().getResourceAsStream("/player/player_left_0.png"));
-			left1 = ImageIO.read(getClass().getResourceAsStream("/player/player_left_1.png"));
-			left2 = ImageIO.read(getClass().getResourceAsStream("/player/player_left_2.png"));
-			right0 = ImageIO.read(getClass().getResourceAsStream("/player/player_right_0.png"));
-			right1 = ImageIO.read(getClass().getResourceAsStream("/player/player_right_1.png"));
-			right2 = ImageIO.read(getClass().getResourceAsStream("/player/player_right_2.png"));
+			image = ImageIO.read(getClass().getResourceAsStream("/player/" + imageName +".png"));
+			image = uTool.scaleImage(image, gp.tileSize, gp.tileSize, true);
 			
 		}catch(IOException e) {
-			
 			e.printStackTrace();
-			
 		}
-	
+		
+		return image;
 	}
 	
 	public void update() {
@@ -156,7 +162,7 @@ public class Player extends Entity{
 				orbCount++;
 				gp.obj[i] = null;
 				gp.ui.showMessage("Orb aquired.");
-				break; // HELLO
+				break;
 				
 			case "runeDoor":
 				break;
@@ -240,8 +246,7 @@ public class Player extends Entity{
 	            break;
 	    }
 		
-        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
-		g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+		g2.drawImage(image, screenX, screenY, null);
 		
 	}
 

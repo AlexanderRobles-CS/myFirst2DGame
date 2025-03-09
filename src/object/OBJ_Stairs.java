@@ -15,6 +15,7 @@ public class OBJ_Stairs extends SuperObject{
         
         try {
             image = ImageIO.read(getClass().getResource("/objects/stairs.png"));
+            image = uTool.scaleImage(image, gp.tileSize, gp.tileSize, false);
             
        } catch (IOException e) {
            e.printStackTrace();

@@ -57,6 +57,21 @@ public class GamePanel extends JPanel implements Runnable{
 		
 	}
 	
+	public void playMusic(int i) {
+		music.setFile(i);
+		music.play();
+		music.loop();
+	}
+	
+	public void stopMusic() {
+		music.stop();
+	}
+	
+	public void playSE(int i) {
+		se.setFile(i);
+		se.play();
+	}
+	
 	public void setupGame() {
 		aSetter.setObject();
 		
@@ -133,21 +148,6 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		g2.dispose();
 		
-	}
-	
-	public void playMusic(int i) {
-		music.setFile(i);
-		music.play();
-		music.loop();
-	}
-	
-	public void stopMusic() {
-		music.stop();
-	}
-	
-	public void playSE(int i) {
-		se.setFile(i);
-		se.play();
 	}
 
 	@Override
