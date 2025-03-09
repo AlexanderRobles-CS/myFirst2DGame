@@ -27,8 +27,8 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int screenHeight = tileSize * maxScreenRow;
 	
 	// WORLD SETTINGS
-	public final int maxWorldCol = 50;
-	public final int maxWorldRow = 50;
+	public int maxWorldCol;
+	public int maxWorldRow;
 	
 	// FPS
 	int FPS = 60;
@@ -94,30 +94,30 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		if(gameState == playState) {
 			player.update();
+			
+			for (int i = 0; i < obj.length; i++) {
+		        if (obj[i] != null) {
+		            if (obj[i] instanceof OBJ_Light_Orb) {
+		                ((OBJ_Light_Orb) obj[i]).update();
+		            }
+		            
+		            if (obj[i] instanceof OBJ_Rune_Step) {
+		            	if (((OBJ_Rune_Step) obj[i]).runeStepActivated == true) {
+		            		((OBJ_Rune_Step) obj[i]).update();
+		            	}
+		            }
+		            
+		            if (obj[i] instanceof OBJ_Rune_Door) {
+		            	if (((OBJ_Rune_Door) obj[i]).runeDoorActivated == true) {
+		            		((OBJ_Rune_Door) obj[i]).update();
+		            	}
+		            }
+		        }
+		    }
 		}
 		
 	    if(gameState == pauseState) {
 	    	// nothing
-	    }
-
-	    for (int i = 0; i < obj.length; i++) {
-	        if (obj[i] != null) {
-	            if (obj[i] instanceof OBJ_Light_Orb) {
-	                ((OBJ_Light_Orb) obj[i]).update();
-	            }
-	            
-	            if (obj[i] instanceof OBJ_Rune_Step) {
-	            	if (((OBJ_Rune_Step) obj[i]).runeStepActivated == true) {
-	            		((OBJ_Rune_Step) obj[i]).update();
-	            	}
-	            }
-	            
-	            if (obj[i] instanceof OBJ_Rune_Door) {
-	            	if (((OBJ_Rune_Door) obj[i]).runeDoorActivated == true) {
-	            		((OBJ_Rune_Door) obj[i]).update();
-	            	}
-	            }
-	        }
 	    }
 	}
 

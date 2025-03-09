@@ -50,8 +50,8 @@ public class Player extends Entity{
 	
 	public void setDefaultValues() {
 		
-		worldX = gp.tileSize * 12;
-		worldY = gp.tileSize * 12;
+		worldX = gp.tileSize * 25;
+		worldY = gp.tileSize * 25;
 		speed = 6;
 		afkCounter = 0;
 		
