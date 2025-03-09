@@ -40,11 +40,9 @@ public class OBJ_Rune_Step extends SuperObject{
             if (frameCounter >= 50) {
                 currentFrame = (currentFrame + 1) % 3;
                 frameCounter = 0;
-                System.out.println("Animating rune step...");
                 
                 if (currentFrame == 2) {
                     isAnimationComplete = true;
-                    System.out.println("Rune step animation complete");
                 }
             }
     	}
