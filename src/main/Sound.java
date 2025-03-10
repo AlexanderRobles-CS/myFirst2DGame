@@ -14,7 +14,7 @@ public class Sound {
 		public Sound() {
 			
 			soundURL[0] = getClass().getResource("/sound/dungeonBackground.wav");
-			soundURL[1] = getClass().getResource("/sound/magicOrbPickup.wav");
+			soundURL[1] = getClass().getResource("/sound/skullPickup.wav");
 			soundURL[2] = getClass().getResource("/sound/tileActivate.wav");
 			soundURL[3] = getClass().getResource("/sound/doorOpen.wav");
 		}

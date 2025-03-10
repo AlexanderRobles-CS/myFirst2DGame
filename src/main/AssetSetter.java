@@ -1,6 +1,7 @@
 package main;
 
-import object.OBJ_Light_Orb;
+import object.OBJ_Skull;
+import entity.NPC_Necromancer;
 import object.OBJ_Pitfall;
 import object.OBJ_Rune_Door;
 import object.OBJ_Rune_Step;
@@ -16,7 +17,7 @@ public class AssetSetter {
 	
 	public void setObject() {
 		
-		gp.obj[0] = new OBJ_Light_Orb(gp);
+		gp.obj[0] = new OBJ_Skull(gp);
 		gp.obj[0].worldX = 9 * gp.tileSize;
 		gp.obj[0].worldY = 5 * gp.tileSize;
 		
@@ -36,11 +37,11 @@ public class AssetSetter {
 		gp.obj[4].worldX = 12 * gp.tileSize;
 		gp.obj[4].worldY = 5 * gp.tileSize;
 		
-		gp.obj[5] = new OBJ_Light_Orb(gp);
+		gp.obj[5] = new OBJ_Skull(gp);
 		gp.obj[5].worldX = 6 * gp.tileSize;
 		gp.obj[5].worldY = 9 * gp.tileSize;
 		
-		gp.obj[6] = new OBJ_Light_Orb(gp);
+		gp.obj[6] = new OBJ_Skull(gp);
 		gp.obj[6].worldX = 6 * gp.tileSize;
 		gp.obj[6].worldY = 3 * gp.tileSize;
 		
@@ -52,5 +53,12 @@ public class AssetSetter {
 		gp.obj[8].worldX = 11 * gp.tileSize;
 		gp.obj[8].worldY = 15 * gp.tileSize;
 
+	}
+	
+	public void setNPC() {
+		gp.npc[0] = new NPC_Necromancer(gp);
+		gp.npc[0].worldX = gp.tileSize * 21;
+		gp.npc[0].worldY = gp.tileSize * 21;
+		
 	}
 }

@@ -7,24 +7,24 @@ import javax.imageio.ImageIO;
 
 import main.GamePanel;
 
-public class OBJ_Light_Orb extends SuperObject {
+public class OBJ_Skull extends SuperObject {
     
-    public BufferedImage[] orbImages = new BufferedImage[3];
+    public BufferedImage[] orbImages = new BufferedImage[4];
     private int currentFrame = 0;
     private int frameCounter = 0;
     private boolean increasing = true;
 
-    public OBJ_Light_Orb(GamePanel gp) {
+    public OBJ_Skull(GamePanel gp) {
         super(gp);
-        name = "lightOrb";
+        name = "skull";
         collision = false;
         loadOrbImages();
     }
 
     private void loadOrbImages() {
         try {
-            for (int i = 0; i < 3; i++) {
-            	orbImages[i] = ImageIO.read(getClass().getResource("/objects/light_orb_" + i + ".png"));
+            for (int i = 0; i < 4; i++) {
+            	orbImages[i] = ImageIO.read(getClass().getResource("/objects/skull_" + i + ".png"));
                 orbImages[i] = uTool.scaleImage(orbImages[i], gp.tileSize, gp.tileSize, false);
             }
             image = orbImages[0];
@@ -36,7 +36,7 @@ public class OBJ_Light_Orb extends SuperObject {
     public void update() {
         frameCounter++;
         if (frameCounter >= 25) {
-            if (currentFrame == 2) increasing = false;
+            if (currentFrame == 3) increasing = false;
             else if (currentFrame == 0) increasing = true;
 
             currentFrame += increasing ? 1 : -1;

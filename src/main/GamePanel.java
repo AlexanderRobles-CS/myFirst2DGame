@@ -7,8 +7,9 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
+import entity.Entity;
 import entity.Player;
-import object.OBJ_Light_Orb;
+import object.OBJ_Skull;
 import object.OBJ_Rune_Door;
 import object.OBJ_Rune_Step;
 import object.SuperObject;
@@ -46,6 +47,7 @@ public class GamePanel extends JPanel implements Runnable{
 	// ENTITY AND OBJECT
 	public Player player = new Player(this, keyH);
 	public SuperObject obj[] = new SuperObject[10];
+	public Entity npc[] = new Entity[10];
 	
 	// GAME STATE
 	public int gameState;
@@ -79,6 +81,7 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	public void setupGame() {
 		aSetter.setObject();
+		aSetter.setNPC();
 		playMusic(0);
 		gameState = playState;
 	}
@@ -93,12 +96,20 @@ public class GamePanel extends JPanel implements Runnable{
 	public void update() {
 		
 		if(gameState == playState) {
+			// PLAYER
 			player.update();
+			
+			// NPC
+			for(int i = 0; i < npc.length; i++) {
+				if(npc[i] != null) {
+					npc[i].update();
+				}
+			}
 			
 			for (int i = 0; i < obj.length; i++) {
 		        if (obj[i] != null) {
-		            if (obj[i] instanceof OBJ_Light_Orb) {
-		                ((OBJ_Light_Orb) obj[i]).update();
+		            if (obj[i] instanceof OBJ_Skull) {
+		                ((OBJ_Skull) obj[i]).update();
 		            }
 		            
 		            if (obj[i] instanceof OBJ_Rune_Step) {
@@ -140,6 +151,13 @@ public class GamePanel extends JPanel implements Runnable{
 		for(int i = 0; i < obj.length; i++) {
 			if(obj[i] != null) {
 				obj[i].draw(g2, this);
+			}
+		}
+		
+		// NPC
+		for(int i = 0; i < npc.length; i++) {
+			if(npc[i] != null) {
+				npc[i].draw(g2);
 			}
 		}
 		

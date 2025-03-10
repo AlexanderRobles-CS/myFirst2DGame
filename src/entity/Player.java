@@ -16,11 +16,10 @@ import main.KeyHandler;
 import main.UtilityTool;
 
 public class Player extends Entity{
-	
-	GamePanel gp;
+
 	KeyHandler keyH;
 	int afkCounter;
-	public int orbCount = 0;
+	public int skullCount = 0;
 	boolean doorActivated = false;
 	
 	public final int screenX;
@@ -28,7 +27,7 @@ public class Player extends Entity{
 	
 	public Player(GamePanel gp, KeyHandler keyH) {
 		
-		this.gp = gp;
+		super(gp);
 		this.keyH = keyH;
 		
 		screenX = gp.screenWidth / 2 - (gp.tileSize / 2);
@@ -59,36 +58,20 @@ public class Player extends Entity{
 	
 	public void getPlayerImage(){
 		
-		idle = setup("player_idle");
-		up0 = setup("player_up_0");
-		up1 = setup("player_up_1");
-		up2 = setup("player_up_2");
-		down0 = setup("player_down_0");
-		down1 = setup("player_down_1");
-		down2 = setup("player_down_2");
-		left0 = setup("player_left_0");
-		left1 = setup("player_left_1");
-		left2 = setup("player_left_2");
-		right0 = setup("player_right_0");
-		right1 = setup("player_right_1");
-		right2 = setup("player_right_2");
+		idle = setup("/player/player_idle", true);
+		up0 = setup("/player/player_up_0", true);
+		up1 = setup("/player/player_up_1", true);
+		up2 = setup("/player/player_up_2", true);
+		down0 = setup("/player/player_down_0", true);
+		down1 = setup("/player/player_down_1", true);
+		down2 = setup("/player/player_down_2", true);
+		left0 = setup("/player/player_left_0", true);
+		left1 = setup("/player/player_left_1", true);
+		left2 = setup("/player/player_left_2", true);
+		right0 = setup("/player/player_right_0", true);
+		right1 = setup("/player/player_right_1", true);
+		right2 = setup("/player/player_right_2", true);
 	
-	}
-	
-	public BufferedImage setup(String imageName) {
-		
-		UtilityTool uTool = new UtilityTool();
-		BufferedImage image = null;
-		
-		try {
-			image = ImageIO.read(getClass().getResourceAsStream("/player/" + imageName +".png"));
-			image = uTool.scaleImage(image, gp.tileSize, gp.tileSize, true);
-			
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
-		
-		return image;
 	}
 	
 	public void update() {
@@ -100,7 +83,7 @@ public class Player extends Entity{
 				direction = "up";
 			}
 			
-			else if (keyH.downPressed == true) {
+			if (keyH.downPressed == true) {
 				direction = "down";
 			}
 			
@@ -119,6 +102,10 @@ public class Player extends Entity{
 			// CHECK OBJECT COLLISION
 			int objIndex = gp.cChecker.checkObject(this, true);
 			pickUpObject(objIndex);
+			
+			// CHECK NPC COLLISION
+			int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+			interactNPC(npcIndex);
 			
 			// IF COLLISION IS FALSE, PLAYER CAN MOVE
 			if(collisionOn == false) {
@@ -157,9 +144,9 @@ public class Player extends Entity{
 			String objectName = gp.obj[i].name;
 			
 			switch(objectName) {
-			case "lightOrb":
+			case "skull":
 				gp.playSE(1);
-				orbCount++;
+				skullCount++;
 				gp.obj[i] = null;
 				break;
 				
@@ -167,8 +154,8 @@ public class Player extends Entity{
 				break;
 				
 			case "runeStep":
-			    if(orbCount > 0 && !((OBJ_Rune_Step) gp.obj[i]).runeStepActivated) {
-			        orbCount--;
+			    if(skullCount > 0 && !((OBJ_Rune_Step) gp.obj[i]).runeStepActivated) {
+			        skullCount--;
 			        ((OBJ_Rune_Step) gp.obj[i]).runeStepActivated = true;
 			        gp.playSE(2);
 
@@ -208,6 +195,12 @@ public class Player extends Entity{
 				// reset world
 				break;	
 			}
+		}
+	}
+	
+	public void interactNPC(int i) {
+		if(i != 999) {
+			System.out.println("you are hitting npc");
 		}
 	}
 	

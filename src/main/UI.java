@@ -5,7 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import object.OBJ_Light_Orb;
+import object.OBJ_Skull;
 
 public class UI {
 	
