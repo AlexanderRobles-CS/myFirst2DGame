@@ -8,7 +8,7 @@ public class KeyHandler implements KeyListener{
 	GamePanel gp;
 	
 	// CONTROLS
-	public boolean upPressed, downPressed, leftPressed, rightPressed, afk;
+	public boolean upPressed, downPressed, leftPressed, rightPressed, afk, enterPressed;
 	
 	// DEBUG
 	boolean checkDrawTime = false;
@@ -26,56 +26,63 @@ public class KeyHandler implements KeyListener{
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
 		
-		switch (code) {
-		    case KeyEvent.VK_W:
-		    	upPressed = true;
-		    	afk = false;
-		        break;
-		        
-		    case KeyEvent.VK_S:
-		        downPressed = true;
-		        afk = false;
-		        break;
-		        
-		    case KeyEvent.VK_A:
-		    	leftPressed = true;
-		    	afk = false;
-		        break;
-		        
-		    case KeyEvent.VK_D:
-		    	rightPressed = true;
-		    	afk = false;
-		        break;
-		        
-		    case KeyEvent.VK_ESCAPE:
-		    	if(gp.gameState == gp.playState) {
-		    		gp.gameState = gp.pauseState;
-		    	}
-		    	
-		    	else if(gp.gameState == gp.pauseState) {
-		    		gp.gameState = gp.playState;
-		    	}
-		    	
-		        break;
-		    
-		    // DEBUG
-		    case KeyEvent.VK_T:
-		    	
-		    	if(!checkDrawTime) {
-		    		checkDrawTime = true;
-		    	}
-		    	
-		    	else if(checkDrawTime) {
-		    		checkDrawTime = false;
-		    	}
-		        break;
-	
-		    default:
-		    	System.out.println("Invalid Key");
-		    	
+		// PLAY STATE
+		if(gp.gameState == gp.playState) {
+			switch (code) {
+			    case KeyEvent.VK_W:
+			    	upPressed = true;
+			    	afk = false;
+			        break;
+			        
+			    case KeyEvent.VK_S:
+			        downPressed = true;
+			        afk = false;
+			        break;
+			        
+			    case KeyEvent.VK_A:
+			    	leftPressed = true;
+			    	afk = false;
+			        break;
+			        
+			    case KeyEvent.VK_D:
+			    	rightPressed = true;
+			    	afk = false;
+			        break;
+			        
+			    case KeyEvent.VK_ESCAPE:
+			    	gp.gameState = gp.pauseState;
+			        break;
+			        
+			    case KeyEvent.VK_ENTER:
+			    	enterPressed = true;
+			        break;
+			    
+			    // DEBUG
+			    case KeyEvent.VK_T:
+			    	
+			    	if(!checkDrawTime) {
+			    		checkDrawTime = true;
+			    	}
+			    	
+			    	else if(checkDrawTime) {
+			    		checkDrawTime = false;
+			    	}
+			        break;
+			}
+		}
+		
+		// PAUSE STATE
+		else if(gp.gameState == gp.pauseState) {
+			if(code == KeyEvent.VK_ESCAPE)
+				gp.gameState = gp.playState;
 			}
 		
-	}
+		// DIALOUGE STATE
+		else if(gp.gameState == gp.dialougeState) {
+			if(code == KeyEvent.VK_ENTER)
+				gp.gameState = gp.playState;
+			}
+}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
@@ -102,9 +109,6 @@ public class KeyHandler implements KeyListener{
 	    	rightPressed = false;
 	    	afk = true;
 	        break;
-
-	    default:
-	    	System.out.println("Invalid Key");
 	    	
 		}
 		

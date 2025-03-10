@@ -13,6 +13,7 @@ public class NPC_Necromancer extends Entity{
 		speed = 1;
 		
 		getNPCImage();
+		setDialogue();
 	}
 	
 	public void getNPCImage(){
@@ -34,6 +35,13 @@ public class NPC_Necromancer extends Entity{
 		right2 = setup("/npc/necromancer_right_2", false);
 		right3 = setup("/npc/necromancer_right_3", false);
 	
+	}
+	
+	public void setDialogue() {
+		dialouges[0] = "Hmm... This chill... Not of my making. \nA whisper in the veil, a presence unseen yet felt. \nYou linger where you should not, spirit.";
+		dialouges[1] = "Not one of mine. No chain binds you, no tether holds you. \nThen why do you haunt this place? \nWhat calls you here... or who?";
+		dialouges[2] = "If you come seeking aid, speak. If you come seeking \nvengeance, know this—I do not suffer restless dead \nto wander where they will.";
+		dialouges[3] = "State your purpose, or I will bind you to \nthe grave you failed to keep.";
 	}
 	
 	public void setAction() {
@@ -58,5 +66,9 @@ public class NPC_Necromancer extends Entity{
 			
 			actionLookCounter = 0;
 		}
+	}
+	
+	public void speak() {
+		super.speak();
 	}
 }
