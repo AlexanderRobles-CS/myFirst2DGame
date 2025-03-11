@@ -7,13 +7,9 @@ import object.OBJ_Rune_Step;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import main.GamePanel;
 import main.KeyHandler;
-import main.UtilityTool;
 
 public class Player extends Entity{
 
@@ -204,6 +200,9 @@ public class Player extends Entity{
 				gp.gameState = gp.dialougeState;
 				gp.npc[i].speak();
 			}
+			
+			gp.gameState = gp.dialougeState;
+			gp.npc[i].speak();
 		}
 		gp.keyH.enterPressed = false;
 	}

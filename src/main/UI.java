@@ -4,9 +4,6 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-
-import object.OBJ_Skull;
 
 public class UI {
 	
@@ -72,7 +69,7 @@ public class UI {
 		int height = gp.tileSize * 4;
 		drawSubWindow(x, y, width, height);
 		
-		courier_new = new Font("Courier New", Font.PLAIN, 15);
+		courier_new = new Font("Courier New", Font.PLAIN, 20);
 		
 		x += gp.tileSize;
 		y += gp.tileSize;

@@ -38,10 +38,10 @@ public class NPC_Necromancer extends Entity{
 	}
 	
 	public void setDialogue() {
-		dialouges[0] = "Hmm... This chill... Not of my making. \nA whisper in the veil, a presence unseen yet felt. \nYou linger where you should not, spirit.";
-		dialouges[1] = "Not one of mine. No chain binds you, no tether holds you. \nThen why do you haunt this place? \nWhat calls you here... or who?";
-		dialouges[2] = "If you come seeking aid, speak. If you come seeking \nvengeance, know this—I do not suffer restless dead \nto wander where they will.";
-		dialouges[3] = "State your purpose, or I will bind you to \nthe grave you failed to keep.";
+		dialouges[0] = "Hmm... This chill... Not of my making. \nA whisper in the veil, a presence unseen \nyet felt. You linger where you should not,\nspirit.";
+		dialouges[1] = "Not one of mine. No chain binds you, no \ntether holds you. Then why do you haunt \nthis place? What calls you here... or who?";
+		dialouges[2] = "If you come seeking aid, speak. If you \ncome seeking vengeance, know this—I do not \nsuffer restless dead to wander where \nthey will.";
+		dialouges[3] = "State your purpose, or I will bind you to \nthe grave you failed to keep...";
 	}
 	
 	public void setAction() {
