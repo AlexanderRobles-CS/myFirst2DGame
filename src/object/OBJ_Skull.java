@@ -9,7 +9,7 @@ import main.GamePanel;
 
 public class OBJ_Skull extends SuperObject {
     
-    public BufferedImage[] orbImages = new BufferedImage[4];
+    public BufferedImage[] skullImages = new BufferedImage[4];
     private int currentFrame = 0;
     private int frameCounter = 0;
     private boolean increasing = true;
@@ -24,10 +24,10 @@ public class OBJ_Skull extends SuperObject {
     private void loadOrbImages() {
         try {
             for (int i = 0; i < 4; i++) {
-            	orbImages[i] = ImageIO.read(getClass().getResource("/objects/skull_" + i + ".png"));
-                orbImages[i] = uTool.scaleImage(orbImages[i], gp.tileSize, gp.tileSize, false);
+            	skullImages[i] = ImageIO.read(getClass().getResource("/objects/skull_" + i + ".png"));
+            	skullImages[i] = uTool.scaleImage(skullImages[i], gp.tileSize, gp.tileSize, false);
             }
-            image = orbImages[0];
+            image = skullImages[0];
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -46,7 +46,7 @@ public class OBJ_Skull extends SuperObject {
 
     @Override
     public void draw(Graphics2D g2, GamePanel gp) {
-        image = orbImages[currentFrame];
+        image = skullImages[currentFrame];
         super.draw(g2, gp);
     }
 }

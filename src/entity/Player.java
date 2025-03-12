@@ -50,6 +50,10 @@ public class Player extends Entity{
 		speed = 6;
 		afkCounter = 0;
 		
+		// PLAYER STATUS
+		maxLife = 6;
+		life = maxLife;
+		
 	}
 	
 	public void getPlayerImage(){
@@ -103,6 +107,11 @@ public class Player extends Entity{
 			int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
 			interactNPC(npcIndex);
 			
+			// CHECK EVENT
+			gp.eHandler.checkEvent();
+			
+			gp.keyH.enterPressed = false;
+			
 			// IF COLLISION IS FALSE, PLAYER CAN MOVE
 			if(collisionOn == false) {
 				switch(direction) {
@@ -141,7 +150,7 @@ public class Player extends Entity{
 			
 			switch(objectName) {
 			case "skull":
-				gp.playSE(1);
+				gp.playSE(2);
 				skullCount++;
 				gp.obj[i] = null;
 				break;
@@ -153,7 +162,7 @@ public class Player extends Entity{
 			    if(skullCount > 0 && !((OBJ_Rune_Step) gp.obj[i]).runeStepActivated) {
 			        skullCount--;
 			        ((OBJ_Rune_Step) gp.obj[i]).runeStepActivated = true;
-			        gp.playSE(2);
+			        gp.playSE(3);
 
 			        // Find the nearest rune door and activate a rune on it
 			        for (int j = 0; j < gp.obj.length; j++) {
@@ -167,7 +176,7 @@ public class Player extends Entity{
 			                    
 			                    // check if door nearby is activated
 				                if(door.runeDoorActivated) {
-				                	gp.playSE(3);
+				                	gp.playSE(4);
 				                }
 			                    break;
 			                }
@@ -201,7 +210,6 @@ public class Player extends Entity{
 				gp.npc[i].speak();
 			}
 		}
-		gp.keyH.enterPressed = false;
 	}
 	
 	public void draw(Graphics2D g2) {

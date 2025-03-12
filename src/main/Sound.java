@@ -13,10 +13,11 @@ public class Sound {
 		
 		public Sound() {
 			
-			soundURL[0] = getClass().getResource("/sound/dungeonBackground.wav");
-			soundURL[1] = getClass().getResource("/sound/skullPickup.wav");
-			soundURL[2] = getClass().getResource("/sound/tileActivate.wav");
-			soundURL[3] = getClass().getResource("/sound/doorOpen.wav");
+			soundURL[0] = getClass().getResource("/sound/MysteriousForestMusicBy F O R N H I M M E L.wav");
+			soundURL[1] = getClass().getResource("/sound/dungeonBackground.wav");
+			soundURL[2] = getClass().getResource("/sound/skullPickup.wav");
+			soundURL[3] = getClass().getResource("/sound/tileActivate.wav");
+			soundURL[4] = getClass().getResource("/sound/doorOpen.wav");
 		}
 		
 		public void setFile(int i) {
