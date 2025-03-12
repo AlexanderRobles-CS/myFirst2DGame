@@ -200,9 +200,6 @@ public class Player extends Entity{
 				gp.gameState = gp.dialougeState;
 				gp.npc[i].speak();
 			}
-			
-			gp.gameState = gp.dialougeState;
-			gp.npc[i].speak();
 		}
 		gp.keyH.enterPressed = false;
 	}

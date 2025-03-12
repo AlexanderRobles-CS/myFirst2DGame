@@ -48,7 +48,7 @@ public class NPC_Necromancer extends Entity{
 		
 		actionLookCounter++;
 		
-		if(actionLookCounter == 120) {
+		if(actionLookCounter == 180) {
 			Random random = new Random();
 			int i = random.nextInt(100) + 1;
 			

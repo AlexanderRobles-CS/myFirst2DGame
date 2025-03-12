@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
 public class UI {
 	
@@ -35,6 +36,7 @@ public class UI {
 		this.g2 = g2;
 		
 		g2.setFont(courier_new);
+		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		g2.setColor(Color.white);
 		
 		switch(gp.gameState) {
