@@ -107,6 +107,10 @@ public class Player extends Entity{
 			int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
 			interactNPC(npcIndex);
 			
+			// CHECK MONSTER COLLISION
+			int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
+			contactMonster(monsterIndex);
+			
 			// CHECK EVENT
 			gp.eHandler.checkEvent();
 			
@@ -140,6 +144,14 @@ public class Player extends Entity{
 			}
 		}
 		
+		if(invincible == true) {
+			invincibleCounter++;
+			
+			if(invincibleCounter > 60) {
+				invincible = false;
+				invincibleCounter = 0;
+			}
+		}
 	}
 	
 	public void pickUpObject(int i) {
@@ -208,6 +220,15 @@ public class Player extends Entity{
 			if(gp.keyH.enterPressed) {
 				gp.gameState = gp.dialougeState;
 				gp.npc[i].speak();
+			}
+		}
+	}
+	
+	public void contactMonster(int i) {
+		if(i != 999) {
+			if(invincible == false) {
+				life -= 1;
+				invincible = true;
 			}
 		}
 	}

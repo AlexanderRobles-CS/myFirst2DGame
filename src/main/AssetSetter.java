@@ -2,6 +2,7 @@ package main;
 
 import object.OBJ_Skull;
 import entity.NPC_Necromancer;
+import monster.MON_Skeleton;
 import object.OBJ_Pitfall;
 import object.OBJ_Rune_Door;
 import object.OBJ_Rune_Step;
@@ -60,5 +61,11 @@ public class AssetSetter {
 		gp.npc[0].worldX = gp.tileSize * 21;
 		gp.npc[0].worldY = gp.tileSize * 21;
 		
+	}
+	
+	public void setMonster() {
+		gp.monster[0] = new MON_Skeleton(gp);
+		gp.monster[0].worldX = gp.tileSize * 21;
+		gp.monster[0].worldY = gp.tileSize * 22;
 	}
 }
