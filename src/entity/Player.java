@@ -10,6 +10,8 @@ import java.awt.image.BufferedImage;
 
 import main.GamePanel;
 import main.KeyHandler;
+import monster.MON_Skeleton;
+import java.util.Random;
 
 public class Player extends Entity{
 
@@ -19,7 +21,9 @@ public class Player extends Entity{
 	boolean doorActivated = false;
 	public String lastMovementDirection = "down";
 
-	
+	private MON_Skeleton lastSkeleton = null;
+	private Random random = new Random();
+
 	public final int screenX;
 	public final int screenY;
 	
@@ -171,6 +175,34 @@ public class Player extends Entity{
 				invincibleCounter = 0;
 			}
 		}
+		
+		// Check for nearby skeleton
+		MON_Skeleton nearestSkeleton = null;
+
+		for (int i = 0; i < gp.monster.length; i++) {
+		    if (gp.monster[i] instanceof MON_Skeleton) {
+		        MON_Skeleton skeleton = (MON_Skeleton) gp.monster[i];
+
+		        if (Math.abs(skeleton.worldX - worldX) < gp.tileSize * 5 &&
+		            Math.abs(skeleton.worldY - worldY) < gp.tileSize * 5) {
+		                
+		            nearestSkeleton = skeleton;
+		            break;
+		        }
+		    }
+		}
+
+		// Random chance to play SE when returning to a skeleton
+		if (nearestSkeleton != null && nearestSkeleton != lastSkeleton) {
+		    if (random.nextInt(100) < 25) { // 40% chance to play the sound
+		        gp.playSE(5);
+		    }
+		    lastSkeleton = nearestSkeleton;
+		} else if (nearestSkeleton == null) {
+		    lastSkeleton = null; // Reset flag when no skeleton is nearby
+		}
+
+
 	}
 	
 	public void pickUpObject(int i) {

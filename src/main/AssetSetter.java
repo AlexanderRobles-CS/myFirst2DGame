@@ -7,6 +7,7 @@ import object.OBJ_Pitfall;
 import object.OBJ_Rune_Door;
 import object.OBJ_Rune_Step;
 import object.OBJ_Stairs;
+import object.OBJ_Torch;
 
 public class AssetSetter {
 	
@@ -53,6 +54,14 @@ public class AssetSetter {
 		gp.obj[8] = new OBJ_Rune_Step(gp);
 		gp.obj[8].worldX = 25 * gp.tileSize;
 		gp.obj[8].worldY = 37 * gp.tileSize;
+		
+		gp.obj[9] = new OBJ_Torch(gp);
+		gp.obj[9].worldX = 24 * gp.tileSize;
+		gp.obj[9].worldY = 35 * gp.tileSize;
+		
+		gp.obj[10] = new OBJ_Torch(gp);
+		gp.obj[10].worldX = 26 * gp.tileSize;
+		gp.obj[10].worldY = 35 * gp.tileSize;
 
 	}
 	

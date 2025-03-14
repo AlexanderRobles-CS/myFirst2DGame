@@ -9,7 +9,9 @@ import javax.swing.JPanel;
 
 import entity.Entity;
 import entity.Player;
+import environment.EnvironmentManager;
 import object.OBJ_Skull;
+import object.OBJ_Torch;
 import object.OBJ_Rune_Door;
 import object.OBJ_Rune_Step;
 import object.SuperObject;
@@ -43,11 +45,12 @@ public class GamePanel extends JPanel implements Runnable{
 	public AssetSetter aSetter = new AssetSetter(this);
 	public UI ui = new UI(this);
 	public EventHandler eHandler = new EventHandler(this);
+	EnvironmentManager eManager = new EnvironmentManager(this);
 	Thread gameThread;
 	
 	// ENTITY AND OBJECT
 	public Player player = new Player(this, keyH);
-	public SuperObject obj[] = new SuperObject[10];
+	public SuperObject obj[] = new SuperObject[20];
 	public Entity npc[] = new Entity[10];
 	public Entity monster[] = new Entity[20];
 	
@@ -88,6 +91,8 @@ public class GamePanel extends JPanel implements Runnable{
 		aSetter.setObject();
 		aSetter.setNPC();
 		aSetter.setMonster();
+		eManager.setup();
+		
 		gameState = titleState;
 	}
 	
@@ -123,6 +128,10 @@ public class GamePanel extends JPanel implements Runnable{
 		        if (obj[i] != null) {
 		            if (obj[i] instanceof OBJ_Skull) {
 		                ((OBJ_Skull) obj[i]).update();
+		            }
+		            
+		            if (obj[i] instanceof OBJ_Torch) {
+		                ((OBJ_Torch) obj[i]).update();  
 		            }
 		            
 		            if (obj[i] instanceof OBJ_Rune_Step) {
@@ -171,6 +180,7 @@ public class GamePanel extends JPanel implements Runnable{
 			for(int i = 0; i < obj.length; i++) {
 				if(obj[i] != null) {
 					obj[i].draw(g2, this);
+					
 				}
 			}
 			
@@ -190,6 +200,9 @@ public class GamePanel extends JPanel implements Runnable{
 			
 			// PLAYER
 			player.draw(g2);
+			
+			// ENVIRONMENT
+			eManager.draw(g2);
 			
 			// UI
 			ui.draw(g2);
