@@ -17,6 +17,8 @@ public class Player extends Entity{
 	int afkCounter;
 	public int skullCount = 0;
 	boolean doorActivated = false;
+	public String lastMovementDirection = "down";
+
 	
 	public final int screenX;
 	public final int screenY;
@@ -46,7 +48,7 @@ public class Player extends Entity{
 	public void setDefaultValues() {
 		
 		worldX = gp.tileSize * 25;
-		worldY = gp.tileSize * 25;
+		worldY = gp.tileSize * 47;
 		speed = 6;
 		afkCounter = 0;
 		
@@ -58,7 +60,14 @@ public class Player extends Entity{
 	
 	public void getPlayerImage(){
 		
-		idle = setup("/player/player_idle", true);
+		idleUp0 = setup("/player/player_up_idle_0", true);
+		idleUp1 = setup("/player/player_up_idle_1", true);
+		idleDown0 = setup("/player/player_idle_0", true);
+		idleDown1 = setup("/player/player_idle_1", true);
+		idleLeft0 = setup("/player/player_left_idle_0", true);
+		idleLeft1 = setup("/player/player_left_idle_1", true);
+		idleRight0 = setup("/player/player_right_idle_0", true);
+		idleRight1 = setup("/player/player_right_idle_1", true);
 		up0 = setup("/player/player_up_0", true);
 		up1 = setup("/player/player_up_1", true);
 		up2 = setup("/player/player_up_2", true);
@@ -77,23 +86,27 @@ public class Player extends Entity{
 	public void update() {
 		
 		if (keyH.upPressed == true || keyH.downPressed == true || 
-				keyH.leftPressed == true || keyH.rightPressed == true) {
+				keyH.leftPressed == true || keyH.rightPressed == true || keyH.enterPressed == true) {
 			
-			if (keyH.upPressed == true) {
-				direction = "up";
-			}
-			
-			if (keyH.downPressed == true) {
-				direction = "down";
-			}
-			
-			else if (keyH.leftPressed == true) {
-				direction = "left";
-			}
-			
-			else if (keyH.rightPressed == true) {
-				direction = "right";
-			}
+			if (keyH.upPressed) {
+		        direction = "up";
+		        lastMovementDirection = "up";
+		    }
+
+		    if (keyH.downPressed) {
+		        direction = "down";
+		        lastMovementDirection = "down";
+		    }
+
+		    if (keyH.leftPressed) {
+		        direction = "left";
+		        lastMovementDirection = "left";
+		    }
+
+		    if (keyH.rightPressed) {
+		        direction = "right";
+		        lastMovementDirection = "right";
+		    }
 			
 			// CHECK TILE COLLISION
 			collisionOn = false;
@@ -114,10 +127,8 @@ public class Player extends Entity{
 			// CHECK EVENT
 			gp.eHandler.checkEvent();
 			
-			gp.keyH.enterPressed = false;
-			
 			// IF COLLISION IS FALSE, PLAYER CAN MOVE
-			if(collisionOn == false) {
+			if(collisionOn == false && 	gp.keyH.enterPressed == false) {
 				switch(direction) {
 					case "up": worldY -= speed; break;
 					case "down": worldY += speed; break;
@@ -126,23 +137,31 @@ public class Player extends Entity{
 				}
 			}
 			
+			gp.keyH.enterPressed = false;
+			
 			afkCounter = 0;
 			spriteCounter++;
-			
-			if (spriteCounter > 12) {
-	            spriteNum = (spriteNum + 1) % 3; // Cycle spriteNum between 0, 1, 2
-	            spriteCounter = 0;
-	        }
 				
 		}
 		
 		else {
-			afkCounter++;
-			
-			if (afkCounter > 20) {
-				direction = "idle";
-			}
+		    afkCounter++;
+		    
+		    if (afkCounter > 120) {
+		        direction = "idle";
+		        spriteCounter++;
+		    }
 		}
+
+		if (spriteCounter > 12) {
+			if (direction.equals("idle")) {
+			    spriteNum = (spriteNum + 1) % 2; // Cycle 0, 1 for idle
+			} else {
+			    spriteNum = (spriteNum + 1) % 3; // Cycle 0, 1, 2 for movement
+			}
+
+            spriteCounter = 0;
+        }
 		
 		if(invincible == true) {
 			invincibleCounter++;
@@ -256,7 +275,23 @@ public class Player extends Entity{
 	            break;
 
 	        case "idle":
-	            image = idle;
+	            switch (lastMovementDirection) {
+	                case "up":
+	                    image = (spriteNum == 0) ? idleUp0 : idleUp1;
+	                    break;
+
+	                case "down":
+	                    image = (spriteNum == 0) ? idleDown0 : idleDown1;
+	                    break;
+
+	                case "left":
+	                    image = (spriteNum == 0) ? idleLeft0 : idleLeft1;
+	                    break;
+
+	                case "right":
+	                    image = (spriteNum == 0) ? idleRight0 : idleRight1;
+	                    break;
+	            }
 	            break;
 
 	        default:

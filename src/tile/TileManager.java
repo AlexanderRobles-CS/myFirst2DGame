@@ -29,12 +29,12 @@ public class TileManager {
         getTileImage();
         
         // LOAD MAP SIZE
-        loadMapSize("/maps/worldV1.txt");
+        loadMapSize("/maps/worldMap.txt");
 
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
         
         // LOAD MAP DATA
-        loadMap("/maps/worldV1.txt");
+        loadMap("/maps/worldMap.txt");
     }
 
     public void loadTileData(String path) {

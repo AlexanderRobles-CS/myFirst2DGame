@@ -13,7 +13,7 @@ public class MON_Skeleton extends Entity{
 		
 		type = 2;
 		direction = "down";
-		speed = 1;
+		speed = 3;
 		maxLife = 4;
 		life = maxLife;
 		
@@ -52,7 +52,7 @@ public class MON_Skeleton extends Entity{
 		
 		actionLookCounter++;
 		
-		if(actionLookCounter == 180) {
+		if(actionLookCounter == 60) {
 			Random random = new Random();
 			int i = random.nextInt(100) + 1;
 			

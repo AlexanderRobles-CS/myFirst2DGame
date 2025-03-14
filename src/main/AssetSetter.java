@@ -19,16 +19,16 @@ public class AssetSetter {
 	public void setObject() {
 		
 		gp.obj[0] = new OBJ_Skull(gp);
-		gp.obj[0].worldX = 9 * gp.tileSize;
-		gp.obj[0].worldY = 5 * gp.tileSize;
+		gp.obj[0].worldX = 25 * gp.tileSize;
+		gp.obj[0].worldY = 42 * gp.tileSize;
 		
 		gp.obj[1] = new OBJ_Rune_Door(gp);
-		gp.obj[1].worldX = 7 * gp.tileSize;
-		gp.obj[1].worldY = 7 * gp.tileSize;
+		gp.obj[1].worldX = 25 * gp.tileSize;
+		gp.obj[1].worldY = 35 * gp.tileSize;
 		
 		gp.obj[2] = new OBJ_Rune_Step(gp);
-		gp.obj[2].worldX = 9 * gp.tileSize;
-		gp.obj[2].worldY = 9 * gp.tileSize;
+		gp.obj[2].worldX = 20 * gp.tileSize;
+		gp.obj[2].worldY = 39 * gp.tileSize;
 		
 		gp.obj[3] = new OBJ_Pitfall(gp);
 		gp.obj[3].worldX = 3 * gp.tileSize;
@@ -39,33 +39,45 @@ public class AssetSetter {
 		gp.obj[4].worldY = 5 * gp.tileSize;
 		
 		gp.obj[5] = new OBJ_Skull(gp);
-		gp.obj[5].worldX = 6 * gp.tileSize;
-		gp.obj[5].worldY = 9 * gp.tileSize;
+		gp.obj[5].worldX = 9 * gp.tileSize;
+		gp.obj[5].worldY = 31 * gp.tileSize;
 		
 		gp.obj[6] = new OBJ_Skull(gp);
-		gp.obj[6].worldX = 6 * gp.tileSize;
-		gp.obj[6].worldY = 3 * gp.tileSize;
+		gp.obj[6].worldX = 41 * gp.tileSize;
+		gp.obj[6].worldY = 31 * gp.tileSize;
 		
 		gp.obj[7] = new OBJ_Rune_Step(gp);
-		gp.obj[7].worldX = 13 * gp.tileSize;
-		gp.obj[7].worldY = 10 * gp.tileSize;
+		gp.obj[7].worldX = 30 * gp.tileSize;
+		gp.obj[7].worldY = 39 * gp.tileSize;
 		
 		gp.obj[8] = new OBJ_Rune_Step(gp);
-		gp.obj[8].worldX = 11 * gp.tileSize;
-		gp.obj[8].worldY = 15 * gp.tileSize;
+		gp.obj[8].worldX = 25 * gp.tileSize;
+		gp.obj[8].worldY = 37 * gp.tileSize;
 
 	}
 	
 	public void setNPC() {
 		gp.npc[0] = new NPC_Necromancer(gp);
-		gp.npc[0].worldX = gp.tileSize * 21;
-		gp.npc[0].worldY = gp.tileSize * 21;
+		gp.npc[0].worldX = gp.tileSize * 25;
+		gp.npc[0].worldY = gp.tileSize * 36;
 		
 	}
 	
 	public void setMonster() {
 		gp.monster[0] = new MON_Skeleton(gp);
-		gp.monster[0].worldX = gp.tileSize * 21;
-		gp.monster[0].worldY = gp.tileSize * 22;
+		gp.monster[0].worldX = gp.tileSize * 7;
+		gp.monster[0].worldY = gp.tileSize * 33;
+		
+		gp.monster[1] = new MON_Skeleton(gp);
+		gp.monster[1].worldX = gp.tileSize * 45;
+		gp.monster[1].worldY = gp.tileSize * 33;
+		
+		gp.monster[2] = new MON_Skeleton(gp);
+		gp.monster[2].worldX = gp.tileSize * 17;
+		gp.monster[2].worldY = gp.tileSize * 43;
+		
+		gp.monster[3] = new MON_Skeleton(gp);
+		gp.monster[3].worldX = gp.tileSize * 40;
+		gp.monster[3].worldY = gp.tileSize * 33;
 	}
 }
