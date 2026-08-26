@@ -43,11 +43,18 @@ public class Player extends Entity{
 		solidArea.width = gp.tileSize - (gp.tileSize / 3);
 		solidArea.height = gp.tileSize - (gp.tileSize / 3);
 		
+		setDefaultPositions();
 		setDefaultValues();
 		getPlayerImage();
 		direction = "idle";
 		
 	}
+	
+    public void setDefaultPositions() {
+        worldX = gp.tileSize * 23; 
+        worldY = gp.tileSize * 21; 
+        direction = "down";
+    }
 	
 	public void setDefaultValues() {
 		
@@ -258,7 +265,6 @@ public class Player extends Entity{
 			case "stairs":
 				System.out.println("Stairs!");
 				
-				// TODO pitfall action
 				// load new map
 				// reset world
 				break;	
@@ -277,6 +283,10 @@ public class Player extends Entity{
 	
 	public void contactMonster(int i) {
 		if(i != 999) {
+			if (life <= 0) {
+				gp.gameState = gp.deathState;
+			}
+						
 			if(invincible == false) {
 				life -= 1;
 				invincible = true;

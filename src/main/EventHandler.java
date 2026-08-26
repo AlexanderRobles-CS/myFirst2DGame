@@ -46,7 +46,7 @@ public class EventHandler {
 		}
 		
 		if(canTouchEvent == true) {
-			if(hit(3, 3, "any") == true) {pitfall(3, 3, gp.dialougeState);}
+			if(hit(3, 3, "any") == true) {pitfall(3, 3, gp.deathState);}
 			if(hit(1, 1, "any") == true) {healingPool(1, 1, gp.dialougeState);}
 			if(hit(2, 2, "any") == true) {teleport(2, 2, gp.dialougeState);}
 		}
@@ -74,7 +74,7 @@ public class EventHandler {
 		gp.player.solidArea.y = gp.player.solidAreaDefaultY;
 		eventRect[col][row].x = eventRect[col][row].eventRectDefaultX;
 		eventRect[col][row].y = eventRect[col][row].eventRectDefaultY;
-		
+
 		return hit;
 	}
 

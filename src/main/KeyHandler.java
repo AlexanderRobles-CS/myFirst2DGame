@@ -45,9 +45,7 @@ public class KeyHandler implements KeyListener{
 			        
 			    case KeyEvent.VK_ENTER:
 			    	if(gp.ui.commandNum == 0) {
-			    		gp.gameState = gp.playState;
-			    		gp.stopMusic();
-			    		gp.playMusic(1);
+			    		gp.restartGame();
 			    	}
 			    	
 			    	if(gp.ui.commandNum == 1) {
@@ -56,6 +54,40 @@ public class KeyHandler implements KeyListener{
 			    	
 			    	if(gp.ui.commandNum == 2) {
 			    		System.exit(0);
+			    	}
+			        break;
+			}
+		}
+		
+		// DEATH STATE
+		else if(gp.gameState == gp.deathState) {
+			switch (code) {
+			    case KeyEvent.VK_W:
+			    	gp.ui.commandNum--;
+			    	if(gp.ui.commandNum < 0) {
+			    		gp.ui.commandNum = 2;
+			    	}
+			        break;
+			        
+			    case KeyEvent.VK_S:
+			    	gp.ui.commandNum++;
+			    	if(gp.ui.commandNum > 2) {
+			    		gp.ui.commandNum = 0;
+			    	}
+			        break;
+			        
+			    case KeyEvent.VK_ENTER:
+			    	if(gp.ui.commandNum == 0) {
+			    		gp.gameState = gp.playState;
+			    		
+			    		gp.restartGame();
+			    		
+			    	}
+			    	
+			    	if(gp.ui.commandNum == 1) {
+			    		gp.gameState = gp.titleState;
+			    		gp.stopMusic();
+			    		gp.playMusic(1);
 			    	}
 			        break;
 			}
@@ -110,14 +142,14 @@ public class KeyHandler implements KeyListener{
 		else if(gp.gameState == gp.pauseState) {
 			if(code == KeyEvent.VK_ESCAPE)
 				gp.gameState = gp.playState;
-			}
+		}
 		
 		// DIALOUGE STATE
 		else if(gp.gameState == gp.dialougeState) {
 			if(code == KeyEvent.VK_ENTER)
 				gp.gameState = gp.playState;
-			}
-}
+		}
+	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
