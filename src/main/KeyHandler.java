@@ -61,6 +61,8 @@ public class KeyHandler implements KeyListener{
 		
 		// DEATH STATE
 		else if(gp.gameState == gp.deathState) {
+			gp.stopMusic();
+			gp.playMusic(8);
 			switch (code) {
 			    case KeyEvent.VK_W:
 			    	gp.ui.commandNum--;
@@ -79,9 +81,7 @@ public class KeyHandler implements KeyListener{
 			    case KeyEvent.VK_ENTER:
 			    	if(gp.ui.commandNum == 0) {
 			    		gp.gameState = gp.playState;
-			    		
 			    		gp.restartGame();
-			    		
 			    	}
 			    	
 			    	if(gp.ui.commandNum == 1) {

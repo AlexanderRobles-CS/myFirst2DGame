@@ -61,6 +61,7 @@ public class Player extends Entity{
 		worldX = gp.tileSize * 25;
 		worldY = gp.tileSize * 47;
 		speed = 6;
+		skullCount = 0;
 		afkCounter = 0;
 		
 		// PLAYER STATUS
@@ -289,6 +290,14 @@ public class Player extends Entity{
 						
 			if(invincible == false) {
 				life -= 1;
+				int choice = random.nextInt(2); 
+        
+				if (choice == 0) {
+					gp.playSE(6);
+				} else {
+					gp.playSE(7);
+				}
+				
 				invincible = true;
 			}
 		}

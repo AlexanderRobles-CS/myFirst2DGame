@@ -19,6 +19,11 @@ public class Sound {
 			soundURL[3] = getClass().getResource("/sound/tileActivate.wav");
 			soundURL[4] = getClass().getResource("/sound/doorOpen.wav");
 			soundURL[5] = getClass().getResource("/sound/monsterSound.wav");
+			soundURL[6] = getClass().getResource("/sound/daviddumaisaudio-small-monster-attack.wav");
+			soundURL[7] = getClass().getResource("/sound/pantoman-monster-attack.wav");
+			soundURL[8] = getClass().getResource("/sound/alphix-game-over.wav");
+			soundURL[9] = getClass().getResource("/sound/soundreality-wrong-place.wav");
+
 		}
 		
 		public void setFile(int i) {
