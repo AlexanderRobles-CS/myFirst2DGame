@@ -1,99 +1,147 @@
 package environment;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Composite;
+import java.awt.CompositeContext;
 import java.awt.Graphics2D;
 import java.awt.RadialGradientPaint;
-import java.awt.geom.Area;
+import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
-import java.awt.Shape;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.Raster;
+import java.awt.image.WritableRaster;
+import java.util.ArrayList;
+import java.util.List;
 
 import main.GamePanel;
+import object.SuperObject;
 
 public class Lighting {
-	
-	GamePanel gp;
-	BufferedImage darknessFilter;
-	
-	public Lighting(GamePanel gp, int circleSize) {
-		
-		// Create a buffered image
-		darknessFilter = new BufferedImage(gp.screenWidth, gp.screenHeight, BufferedImage.TYPE_INT_ARGB);
-		Graphics2D g2 = (Graphics2D)darknessFilter.getGraphics();
-		
-		// Create a screen-sized rectangle area
-		Area screenArea = new Area(new Rectangle2D.Double(0, 0, gp.screenWidth, gp.screenHeight));
-		
-		// Get the center x and y of the light circle
-		int centerX = gp.player.screenX + (gp.tileSize) / 2;
-		int centerY = gp.player.screenY + (gp.tileSize) / 2;
-		
-		// Get the top left x and y of the light circle
-		double x = centerX - (circleSize / 2);
-		double y = centerY - (circleSize / 2);
-		
-		// Create a light circle image
-		Shape circleShape = new Ellipse2D.Double(x, y,  circleSize, circleSize);
-		
-		//  Create a light circle area
-		Area lightArea = new Area(circleShape);
-		
-		// Subtract the light circle from the screen rectangle
-		screenArea.subtract(lightArea);
-		
-		// Create a gradient effect within the light circle
-		Color color[] = new Color[12];
-		float fraction[] = new float[12];
-		
-		color[0] = new Color(0, 0, 0, 0.1f);
-		color[1] = new Color(0, 0, 0, 0.42f);
-		color[2] = new Color(0, 0, 0, 0.52f);
-		color[3] = new Color(0, 0, 0, 0.61f);
-		color[4] = new Color(0, 0, 0, 0.69f);
-		color[5] = new Color(0, 0, 0, 0.76f);
-		color[6] = new Color(0, 0, 0, 0.82f);
-		color[7] = new Color(0, 0, 0, 0.87f);
-		color[8] = new Color(0, 0, 0, 0.91f);
-		color[9] = new Color(0, 0, 0, 0.94f);
-		color[10] = new Color(0, 0, 0, 0.96f);
-		color[11] = new Color(0, 0, 0, 0.98f);
-		
-		fraction[0] = 0f;
-		fraction[1] = 0.4f;
-		fraction[2] = 0.5f;
-		fraction[3] = 0.6f;
-		fraction[4] = 0.65f;
-		fraction[5] = 0.7f;
-		fraction[6] = 0.75f;
-		fraction[7] = 0.8f;
-		fraction[8] = 0.85f;
-		fraction[9] = 0.9f;
-		fraction[10] = 0.95f;
-		fraction[11] = 1f;
-		
-		// Create gradient paint setting for light circle
-		RadialGradientPaint gPaint = new RadialGradientPaint(centerX, centerY, (circleSize / 2), fraction, color);
-		
-		// Set the gradient data on g2
-		g2.setPaint(gPaint);
-		
-		// Draw the light circle
-		g2.fill(lightArea);
-		
-//		// set a color (black ) to draw the rectangle
-//		g2.setColor(new Color(0, 0, 0, 0.95f));
-		
-		// Draw the screen rectangle without the light circle area
-		g2.fill(screenArea);
-		
-		g2.dispose();
-		
-	}
-	
-	public void draw(Graphics2D g2) {
-		
-		g2.drawImage(darknessFilter, 0, 0,  null);
-	}
-	
+
+    GamePanel gp;
+    BufferedImage darknessFilter;
+    int playerLightSize;
+
+    private static final float[] FRACTIONS = {0f,0.4f,0.5f,0.6f,0.65f,0.7f,0.75f,0.8f,0.85f,0.9f,0.95f,1f};
+    private static final Color[] COLORS = {
+        new Color(0,0,0,0.10f), new Color(0,0,0,0.42f), new Color(0,0,0,0.52f),
+        new Color(0,0,0,0.61f), new Color(0,0,0,0.69f), new Color(0,0,0,0.76f),
+        new Color(0,0,0,0.82f), new Color(0,0,0,0.87f), new Color(0,0,0,0.91f),
+        new Color(0,0,0,0.94f), new Color(0,0,0,0.96f), new Color(0,0,0,0.98f)
+    };
+
+    private static class LightSource {
+        int x, y, size;
+        LightSource(int x, int y, int size) { this.x = x; this.y = y; this.size = size; }
+    }
+
+    public Lighting(GamePanel gp, int playerLightSize) {
+        this.gp = gp;
+        this.playerLightSize = playerLightSize;
+        darknessFilter = new BufferedImage(gp.screenWidth, gp.screenHeight, BufferedImage.TYPE_INT_ARGB);
+    }
+
+    public void update() {
+
+        Graphics2D g2 = (Graphics2D) darknessFilter.getGraphics();
+
+        // clear last frame
+        g2.setComposite(AlphaComposite.Clear);
+        g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+
+        // fill whole screen with base (maximum) darkness first
+        g2.setComposite(AlphaComposite.SrcOver);
+        g2.setColor(COLORS[COLORS.length - 1]);
+        g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+
+        // gather all light sources this frame
+        List<LightSource> lights = new ArrayList<>();
+
+        int px = gp.player.screenX + gp.tileSize / 2;
+        int py = gp.player.screenY + gp.tileSize / 2;
+        lights.add(new LightSource(px, py, playerLightSize));
+
+        for (SuperObject obj : gp.obj) {
+            if (obj == null) continue;
+            if (obj instanceof object.OBJ_Torch) {
+                object.OBJ_Torch torch = (object.OBJ_Torch) obj;
+
+                int cx = obj.worldX - gp.player.worldX + gp.player.screenX + gp.tileSize / 2;
+                int cy = obj.worldY - gp.player.worldY + gp.player.screenY + gp.tileSize / 2;
+
+                int baseLightSize = gp.tileSize * 4;
+                int torchLightSize = (int) (baseLightSize + torch.getLightFlicker());
+
+                lights.add(new LightSource(cx, cy, torchLightSize));
+            }
+        }
+
+        // draw each light using MIN-alpha compositing so overlaps take
+        // whichever light is brighter (less dark), instead of stacking darkness
+        g2.setComposite(MinAlphaComposite.INSTANCE);
+        for (LightSource ls : lights) {
+            RadialGradientPaint gPaint = new RadialGradientPaint(
+                ls.x, ls.y, ls.size / 2f, FRACTIONS, COLORS);
+            g2.setPaint(gPaint);
+            g2.fill(new Ellipse2D.Double(
+                ls.x - ls.size / 2.0, ls.y - ls.size / 2.0, ls.size, ls.size));
+        }
+
+        g2.dispose();
+    }
+
+    public void draw(Graphics2D g2) {
+        g2.drawImage(darknessFilter, 0, 0, null);
+    }
+
+    private static class MinAlphaComposite implements Composite {
+
+        static final MinAlphaComposite INSTANCE = new MinAlphaComposite();
+
+        @Override
+        public CompositeContext createContext(ColorModel srcColorModel, ColorModel dstColorModel, RenderingHints hints) {
+            return new CompositeContext() {
+                @Override
+                public void dispose() {}
+
+                @Override
+                public void compose(Raster src, Raster dstIn, WritableRaster dstOut) {
+                    int w = Math.min(src.getWidth(), dstIn.getWidth());
+                    int h = Math.min(src.getHeight(), dstIn.getHeight());
+
+                    int[] srcPixel = new int[4];
+                    int[] dstPixel = new int[4];
+                    int[] outPixel = new int[4];
+
+                    for (int y = 0; y < h; y++) {
+                        for (int x = 0; x < w; x++) {
+                            src.getPixel(x, y, srcPixel);
+                            dstIn.getPixel(x, y, dstPixel);
+
+                            int srcA = srcPixel[3];
+                            int dstA = dstPixel[3];
+
+                            if (srcA < dstA) {
+                                // new light is brighter here: take its color/alpha
+                                outPixel[0] = srcPixel[0];
+                                outPixel[1] = srcPixel[1];
+                                outPixel[2] = srcPixel[2];
+                                outPixel[3] = srcA;
+                            } else {
+                                // keep existing (darker alpha stays / already-brighter light stays)
+                                outPixel[0] = dstPixel[0];
+                                outPixel[1] = dstPixel[1];
+                                outPixel[2] = dstPixel[2];
+                                outPixel[3] = dstA;
+                            }
+
+                            dstOut.setPixel(x, y, outPixel);
+                        }
+                    }
+                }
+            };
+        }
+    }
 }
