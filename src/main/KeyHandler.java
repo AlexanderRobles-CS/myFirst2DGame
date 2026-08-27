@@ -31,7 +31,7 @@ public class KeyHandler implements KeyListener{
 			switch (code) {
 			    case KeyEvent.VK_W:
 			    	gp.ui.commandNum--;
-					gp.playSE(11);
+					gp.playSE(Sound.MENU_NAVIGATION);
 			    	if(gp.ui.commandNum < 0) {
 			    		gp.ui.commandNum = 2;
 			    	}
@@ -39,7 +39,7 @@ public class KeyHandler implements KeyListener{
 			        
 			    case KeyEvent.VK_S:
 			    	gp.ui.commandNum++;
-					gp.playSE(11);
+					gp.playSE(Sound.MENU_NAVIGATION);
 			    	if(gp.ui.commandNum > 2) {
 			    		gp.ui.commandNum = 0;
 			    	}
@@ -47,7 +47,7 @@ public class KeyHandler implements KeyListener{
 			        
 			    case KeyEvent.VK_ENTER:
 			    	if(gp.ui.commandNum == 0) {
-						gp.playSE(10);
+						gp.playSE(Sound.CONFIRMATION_SOUND);
 			    		gp.restartGame();
 			    	}
 			    	
@@ -67,16 +67,15 @@ public class KeyHandler implements KeyListener{
 			switch (code) {
 			    case KeyEvent.VK_W:
 			    	gp.ui.commandNum--;
-					gp.playSE(11);
+					gp.playSE(Sound.MENU_NAVIGATION);
 			    	if(gp.ui.commandNum < 0) {
 			    		gp.ui.commandNum = 2;
-						gp.playSE(11);
 			    	}
 			        break;
 			        
 			    case KeyEvent.VK_S:
 			    	gp.ui.commandNum++;
-					gp.playSE(11);
+					gp.playSE(Sound.MENU_NAVIGATION);
 			    	if(gp.ui.commandNum > 2) {
 			    		gp.ui.commandNum = 0;
 			    	}
@@ -85,14 +84,14 @@ public class KeyHandler implements KeyListener{
 			    case KeyEvent.VK_ENTER:
 			    	if(gp.ui.commandNum == 0) {
 			    		gp.gameState = gp.playState;
-						gp.playSE(10);
+						gp.playSE(Sound.CONFIRMATION_SOUND);
 			    		gp.restartGame();
 			    	}
 			    	
 			    	if(gp.ui.commandNum == 1) {
 			    		gp.gameState = gp.titleState;
 			    		gp.stopMusic();
-			    		gp.playMusic(1);
+			    		gp.playMusic(Sound.MAIN_THEME);
 			    	}
 			        break;
 			}

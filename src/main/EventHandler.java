@@ -80,10 +80,6 @@ public class EventHandler {
 
 	public void pitfall(int col, int row, int gameState) {
 		gp.gameState = gameState;
-		gp.ui.currentDialouge = "You fell into a pit!";
-		gp.player.life -= 1;
-		//eventRect[col][row].eventDone = true;   // one time event
-		canTouchEvent = false;                    // one time event but can touch again after getting away at least one tile
 	}
 	
 	public void healingPool(int col, int row, int gameState) {

@@ -6,12 +6,15 @@ import javax.swing.JFrame;
 public class Main {
 
     public static void main(String[] args) {
+    	String playerIcon = "/player/player_idle_0.png";
+    	String gameTitle = "Luminspire";
+    	
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
-        window.setTitle("Luminspire");
+        window.setTitle(gameTitle);
 
-        ImageIcon icon = new ImageIcon(Main.class.getResource("/player/player_idle_0.png"));
+        ImageIcon icon = new ImageIcon(Main.class.getResource(playerIcon));
         window.setIconImage(icon.getImage());
 
         GamePanel gamePanel = new GamePanel();

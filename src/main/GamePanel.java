@@ -88,7 +88,7 @@ public class GamePanel extends JPanel implements Runnable{
 	}
 	
 	public void setupGame() {
-		playMusic(0);
+		playMusic(Sound.MAIN_THEME);
 		aSetter.setObject();
 		aSetter.setNPC();
 		aSetter.setMonster();
@@ -109,7 +109,7 @@ public class GamePanel extends JPanel implements Runnable{
 	    aSetter.setMonster();
 	    
 	    stopMusic();
-	    playMusic(1);
+	    playMusic(Sound.DUNGEON_BACKGROUND);
 	    
 	    gameState = playState;
 	}

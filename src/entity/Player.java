@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 
 import main.GamePanel;
 import main.KeyHandler;
+import main.Sound;
 import monster.MON_Skeleton;
 import java.util.Random;
 
@@ -203,7 +204,7 @@ public class Player extends Entity{
 		// Random chance to play SE when returning to a skeleton
 		if (nearestSkeleton != null && nearestSkeleton != lastSkeleton) {
 		    if (random.nextInt(100) < 25) { // 40% chance to play the sound
-		        gp.playSE(5);
+		        gp.playSE(Sound.MONSTER_GROAN);
 		    }
 		    lastSkeleton = nearestSkeleton;
 		} else if (nearestSkeleton == null) {
@@ -221,7 +222,7 @@ public class Player extends Entity{
 			
 			switch(objectName) {
 			case "skull":
-				gp.playSE(2);
+				gp.playSE(Sound.SKULL_PICKUP);
 				skullCount++;
 				gp.obj[i] = null;
 				break;
@@ -233,7 +234,7 @@ public class Player extends Entity{
 			    if(skullCount > 0 && !((OBJ_Rune_Step) gp.obj[i]).runeStepActivated) {
 			        skullCount--;
 			        ((OBJ_Rune_Step) gp.obj[i]).runeStepActivated = true;
-			        gp.playSE(3);
+			        gp.playSE(Sound.TILE_ACTIVATE);
 
 			        // Find the nearest rune door and activate a rune on it
 			        for (int j = 0; j < gp.obj.length; j++) {
@@ -247,7 +248,7 @@ public class Player extends Entity{
 			                    
 			                    // check if door nearby is activated
 				                if(door.runeDoorActivated) {
-				                	gp.playSE(4);
+				                	gp.playSE(Sound.DOOR_OPEN);
 				                }
 			                    break;
 			                }
@@ -293,9 +294,9 @@ public class Player extends Entity{
 				int choice = random.nextInt(2); 
         
 				if (choice == 0) {
-					gp.playSE(6);
+					gp.playSE(Sound.MONSTER_ATTACK_0);
 				} else {
-					gp.playSE(7);
+					gp.playSE(Sound.MONSTER_ATTACK_1);
 				}
 				
 				invincible = true;

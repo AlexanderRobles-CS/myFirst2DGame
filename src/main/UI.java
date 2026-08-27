@@ -30,6 +30,8 @@ public class UI {
 	public String message = "";
 	int messageCounter = 0;
 	public String currentDialouge = "";
+
+	private String fontName = "/font/Purisa Bold.ttf";
 	
 	public int commandNum = 0;
 	
@@ -37,7 +39,7 @@ public class UI {
 		this.gp = gp;
 		
 		try {
-			InputStream is = getClass().getResourceAsStream("/font/Purisa Bold.ttf");
+			InputStream is = getClass().getResourceAsStream(fontName);
 			purisaB = Font.createFont(Font.TRUETYPE_FONT, is);
 		} catch (FontFormatException e) {
 			e.printStackTrace();
