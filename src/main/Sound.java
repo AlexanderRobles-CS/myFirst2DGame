@@ -23,6 +23,8 @@ public class Sound {
 			soundURL[7] = getClass().getResource("/sound/pantoman-monster-attack.wav");
 			soundURL[8] = getClass().getResource("/sound/alphix-game-over.wav");
 			soundURL[9] = getClass().getResource("/sound/soundreality-wrong-place.wav");
+			soundURL[10] = getClass().getResource("/sound/dragon-studio-scary-transition.wav");
+			soundURL[11] = getClass().getResource("/sound/freesound_community-menu-selection.wav");
 
 		}
 		

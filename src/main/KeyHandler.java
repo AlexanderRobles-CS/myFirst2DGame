@@ -31,6 +31,7 @@ public class KeyHandler implements KeyListener{
 			switch (code) {
 			    case KeyEvent.VK_W:
 			    	gp.ui.commandNum--;
+					gp.playSE(11);
 			    	if(gp.ui.commandNum < 0) {
 			    		gp.ui.commandNum = 2;
 			    	}
@@ -38,6 +39,7 @@ public class KeyHandler implements KeyListener{
 			        
 			    case KeyEvent.VK_S:
 			    	gp.ui.commandNum++;
+					gp.playSE(11);
 			    	if(gp.ui.commandNum > 2) {
 			    		gp.ui.commandNum = 0;
 			    	}
@@ -45,6 +47,7 @@ public class KeyHandler implements KeyListener{
 			        
 			    case KeyEvent.VK_ENTER:
 			    	if(gp.ui.commandNum == 0) {
+						gp.playSE(10);
 			    		gp.restartGame();
 			    	}
 			    	
@@ -61,18 +64,19 @@ public class KeyHandler implements KeyListener{
 		
 		// DEATH STATE
 		else if(gp.gameState == gp.deathState) {
-			gp.stopMusic();
-			gp.playMusic(8);
 			switch (code) {
 			    case KeyEvent.VK_W:
 			    	gp.ui.commandNum--;
+					gp.playSE(11);
 			    	if(gp.ui.commandNum < 0) {
 			    		gp.ui.commandNum = 2;
+						gp.playSE(11);
 			    	}
 			        break;
 			        
 			    case KeyEvent.VK_S:
 			    	gp.ui.commandNum++;
+					gp.playSE(11);
 			    	if(gp.ui.commandNum > 2) {
 			    		gp.ui.commandNum = 0;
 			    	}
@@ -81,6 +85,7 @@ public class KeyHandler implements KeyListener{
 			    case KeyEvent.VK_ENTER:
 			    	if(gp.ui.commandNum == 0) {
 			    		gp.gameState = gp.playState;
+						gp.playSE(10);
 			    		gp.restartGame();
 			    	}
 			    	
