@@ -1,18 +1,16 @@
 package entity;
 
 
-import object.OBJ_Rune_Door;
-import object.OBJ_Rune_Step;
-
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-
+import java.util.Random;
 import main.GamePanel;
 import main.KeyHandler;
 import main.Sound;
 import monster.MON_Skeleton;
-import java.util.Random;
+import object.OBJ_Rune_Door;
+import object.OBJ_Rune_Step;
 
 public class Player extends Entity{
 
@@ -260,8 +258,8 @@ public class Player extends Entity{
 				
 			case "pitfall":
 				System.out.println("Pitfall!");
+				gp.gameState = gp.deathState;
 				
-				// TODO pitfall action
 				break;
 				
 			case "stairs":

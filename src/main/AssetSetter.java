@@ -1,11 +1,11 @@
 package main;
 
-import object.OBJ_Skull;
 import entity.NPC_Necromancer;
 import monster.MON_Skeleton;
 import object.OBJ_Pitfall;
 import object.OBJ_Rune_Door;
 import object.OBJ_Rune_Step;
+import object.OBJ_Skull;
 import object.OBJ_Stairs;
 import object.OBJ_Torch;
 
@@ -32,12 +32,12 @@ public class AssetSetter {
 		gp.obj[2].worldY = 39 * gp.tileSize;
 		
 		gp.obj[3] = new OBJ_Pitfall(gp);
-		gp.obj[3].worldX = 3 * gp.tileSize;
-		gp.obj[3].worldY = 3 * gp.tileSize;
-		
+		gp.obj[3].worldX = 19 * gp.tileSize;
+		gp.obj[3].worldY = 31 * gp.tileSize;
+
 		gp.obj[4] = new OBJ_Stairs(gp);
-		gp.obj[4].worldX = 12 * gp.tileSize;
-		gp.obj[4].worldY = 5 * gp.tileSize;
+		gp.obj[4].worldX = 34 * gp.tileSize;
+		gp.obj[4].worldY = 28 * gp.tileSize;
 		
 		gp.obj[5] = new OBJ_Skull(gp);
 		gp.obj[5].worldX = 9 * gp.tileSize;
