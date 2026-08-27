@@ -1,19 +1,17 @@
 package main;
 
+import entity.Entity;
+import entity.Player;
+import environment.EnvironmentManager;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-
 import javax.swing.JPanel;
-
-import entity.Entity;
-import entity.Player;
-import environment.EnvironmentManager;
-import object.OBJ_Skull;
-import object.OBJ_Torch;
 import object.OBJ_Rune_Door;
 import object.OBJ_Rune_Step;
+import object.OBJ_Skull;
+import object.OBJ_Torch;
 import object.SuperObject;
 import tile.TileManager;
 
@@ -178,68 +176,89 @@ public class GamePanel extends JPanel implements Runnable{
 	}
 
 	
+	@Override
 	public void paintComponent(Graphics g) {
-		
 		super.paintComponent(g);
+
 		Graphics2D g2 = (Graphics2D) g;
-		
+
+		// Scale game to fit window while maintaining aspect ratio
+		double scaleX = (double) getWidth() / screenWidth;
+		double scaleY = (double) getHeight() / screenHeight;
+
+		double scale = Math.min(scaleX, scaleY);
+
+		// Calculate the scaled dimensions
+		int scaledWidth = (int) (screenWidth * scale);
+		int scaledHeight = (int) (screenHeight * scale);
+
+		// Center the game
+		int x = (getWidth() - scaledWidth) / 2;
+		int y = (getHeight() - scaledHeight) / 2;
+
+		// Move to center
+		g2.translate(x, y);
+
+		// Scale the game
+		g2.scale(scale, scale);
+		g2.clipRect(0, 0, screenWidth, screenHeight);
+
 		// DEBUG
 		long drawStart = 0;
 		if(keyH.checkDrawTime) {
 			drawStart = System.nanoTime();
 		}
-		
+
 		// TITLE SCREEN
 		if(gameState == titleState) {
 			ui.draw(g2);
 		}
-		
+
 		else {
 			// TILE
 			tileM.draw(g2);
-			
+
 			// OBJECT
 			for(int i = 0; i < obj.length; i++) {
 				if(obj[i] != null) {
 					obj[i].draw(g2, this);
-					
 				}
 			}
-			
+
 			// NPC
 			for(int i = 0; i < npc.length; i++) {
 				if(npc[i] != null) {
 					npc[i].draw(g2);
 				}
 			}
-			
-			// NPC
+
+			// MONSTER
 			for(int i = 0; i < monster.length; i++) {
 				if(monster[i] != null) {
 					monster[i].draw(g2);
 				}
 			}
-			
+
 			// PLAYER
 			player.draw(g2);
-			
+
 			// ENVIRONMENT
 			eManager.draw(g2);
-			
+
 			// UI
 			ui.draw(g2);
 		}
-			
+
 		// DEBUG
 		if(keyH.checkDrawTime) {
 			long drawEnd = System.nanoTime();
 			long passed = drawEnd - drawStart;
+
 			g2.setColor(Color.white);
 			g2.drawString("Draw Time: " + passed, 10, 400);
 		}
-		
+
 		g2.dispose();
-		
 	}
 
 	@Override

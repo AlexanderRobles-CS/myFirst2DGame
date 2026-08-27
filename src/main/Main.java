@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -19,8 +20,9 @@ public class Main {
 
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);
-        window.pack();
-
+        window.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        window.setResizable(true);
+        window.setMinimumSize(new Dimension(800, 600));
         window.setLocationRelativeTo(null);
         window.setVisible(true);
 
