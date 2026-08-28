@@ -283,24 +283,27 @@ public class Player extends Entity{
 	
 	public void contactMonster(int i) {
 		if(i != 999) {
-			if (life <= 0) {
-				gp.gameState = gp.deathState;
-			}
-						
+
 			if(invincible == false) {
+
 				life -= 1;
+				invincible = true;
+
 				int choice = random.nextInt(2); 
-        
+
 				if (choice == 0) {
 					gp.playSE(Sound.MONSTER_ATTACK_0);
 				} else {
 					gp.playSE(Sound.MONSTER_ATTACK_1);
 				}
-				
-				invincible = true;
+
+				if (life <= 0) {
+					gp.gameState = gp.deathState;
+				}
 			}
 		}
 	}
+
 	
 	public void draw(Graphics2D g2) {
 		
