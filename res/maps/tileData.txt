@@ -25,7 +25,7 @@ true
 012.png
 true
 013.png
-false
+true
 014.png
 true
 015.png
