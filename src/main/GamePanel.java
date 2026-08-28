@@ -191,19 +191,21 @@ public class GamePanel extends JPanel implements Runnable{
 
 		Graphics2D g2 = (Graphics2D) g;
 
-		double scaler = (double) getHeight() / screenHeight;
+		g2.setColor(Color.black);
+		g2.fillRect(0, 0, getWidth(), getHeight());
 
-		// Calculate scaled dimensions
+		double scaleX = (double) getWidth() / screenWidth;
+		double scaleY = (double) getHeight() / screenHeight;
+		double scaler = Math.min(scaleX, scaleY);
+
 		int scaledWidth = (int) (screenWidth * scaler);
 		int scaledHeight = (int) (screenHeight * scaler);
 
-		// Center horizontally and vertically
 		int x = (getWidth() - scaledWidth) / 2;
 		int y = (getHeight() - scaledHeight) / 2;
 
 		g2.translate(x, y);
 		g2.scale(scaler, scaler);
-
 		g2.clipRect(0, 0, screenWidth, screenHeight);
 
 		// DEBUG
