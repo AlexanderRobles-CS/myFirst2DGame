@@ -23,7 +23,7 @@ public class GamePanel extends JPanel implements Runnable{
 	private DisplayManager displayManager;
 	
 	public final int tileSize = originalTileSize * scale;
-	public final int maxScreenCol = 16;
+	public final int maxScreenCol = 22;
 	public final int maxScreenRow = 12;
 	public final int screenWidth = tileSize * maxScreenCol;
 	public final int screenHeight = tileSize * maxScreenRow;
@@ -191,25 +191,19 @@ public class GamePanel extends JPanel implements Runnable{
 
 		Graphics2D g2 = (Graphics2D) g;
 
-		// Scale game to fit window while maintaining aspect ratio
-		double scaleX = (double) getWidth() / screenWidth;
-		double scaleY = (double) getHeight() / screenHeight;
+		double scaler = (double) getHeight() / screenHeight;
 
-		double scale = Math.min(scaleX, scaleY);
+		// Calculate scaled dimensions
+		int scaledWidth = (int) (screenWidth * scaler);
+		int scaledHeight = (int) (screenHeight * scaler);
 
-		// Calculate the scaled dimensions
-		int scaledWidth = (int) (screenWidth * scale);
-		int scaledHeight = (int) (screenHeight * scale);
-
-		// Center the game
+		// Center horizontally and vertically
 		int x = (getWidth() - scaledWidth) / 2;
 		int y = (getHeight() - scaledHeight) / 2;
 
-		// Move to center
 		g2.translate(x, y);
+		g2.scale(scaler, scaler);
 
-		// Scale the game
-		g2.scale(scale, scale);
 		g2.clipRect(0, 0, screenWidth, screenHeight);
 
 		// DEBUG

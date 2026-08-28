@@ -6,7 +6,7 @@ import main.GamePanel;
 
 public class NPC_Necromancer extends Entity{
 
-	private final LightFlicker flicker = new LightFlicker(12.0, 10, 0.25); // slow, subtle, sickly glow
+	private final LightFlicker flicker = new LightFlicker(12.0, 10, 0.25);
 
 	
 	public NPC_Necromancer(GamePanel gp) {
