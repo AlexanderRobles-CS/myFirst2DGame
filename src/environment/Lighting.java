@@ -8,6 +8,7 @@ import java.awt.Composite;
 import java.awt.CompositeContext;
 import java.awt.Graphics2D;
 import java.awt.RadialGradientPaint;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
@@ -22,7 +23,8 @@ import object.SuperObject;
 public class Lighting {
 
     GamePanel gp;
-    BufferedImage darknessFilter;
+    volatile BufferedImage darknessFilter;
+    private BufferedImage backBuffer;
     int playerLightSize;
 
     private static final float[] FRACTIONS = {0f,0.4f,0.5f,0.6f,0.65f,0.7f,0.75f,0.8f,0.85f,0.9f,0.95f,1f};
@@ -42,13 +44,15 @@ public class Lighting {
         this.gp = gp;
         this.playerLightSize = playerLightSize;
         darknessFilter = new BufferedImage(gp.screenWidth, gp.screenHeight, BufferedImage.TYPE_INT_ARGB);
+        backBuffer = new BufferedImage(gp.screenWidth, gp.screenHeight, BufferedImage.TYPE_INT_ARGB);
     }
 
     public void update() {
 
-        Graphics2D g2 = (Graphics2D) darknessFilter.getGraphics();
+        Graphics2D g2 = backBuffer.createGraphics();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        // clear last frame
+        // clear reused buffer
         g2.setComposite(AlphaComposite.Clear);
         g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
 
@@ -94,17 +98,34 @@ public class Lighting {
         }
 
         // draw each light using MIN-alpha compositing so overlaps take
-        // whichever light is brighter (less dark), instead of stacking darkness
+        // whichever light is brighter (less dark), instead of stacking darkness.
+        // Clip to each light's bounding box so the slow per-pixel composite loop
+        // only runs over that light's area, not the whole screen, every time.
         g2.setComposite(MinAlphaComposite.INSTANCE);
         for (LightSource ls : lights) {
+            Rectangle bounds = new Rectangle(
+                (int) (ls.x - ls.size / 2.0),
+                (int) (ls.y - ls.size / 2.0),
+                ls.size, ls.size
+            );
+
+            g2.setClip(bounds);
+
             RadialGradientPaint gPaint = new RadialGradientPaint(
                 ls.x, ls.y, ls.size / 2f, FRACTIONS, COLORS);
             g2.setPaint(gPaint);
             g2.fill(new Ellipse2D.Double(
                 ls.x - ls.size / 2.0, ls.y - ls.size / 2.0, ls.size, ls.size));
         }
+        g2.setClip(null);
 
         g2.dispose();
+
+        // swap buffers: darknessFilter becomes what backBuffer was, and vice versa.
+        // draw() only ever sees a fully complete frame, never a half-drawn one.
+        BufferedImage temp = darknessFilter;
+        darknessFilter = backBuffer;
+        backBuffer = temp;
     }
 
     public void draw(Graphics2D g2) {
@@ -139,13 +160,11 @@ public class Lighting {
                             int dstA = dstPixel[3];
 
                             if (srcA < dstA) {
-                                // new light is brighter here: take its color/alpha
                                 outPixel[0] = srcPixel[0];
                                 outPixel[1] = srcPixel[1];
                                 outPixel[2] = srcPixel[2];
                                 outPixel[3] = srcA;
                             } else {
-                                // keep existing (darker alpha stays / already-brighter light stays)
                                 outPixel[0] = dstPixel[0];
                                 outPixel[1] = dstPixel[1];
                                 outPixel[2] = dstPixel[2];
