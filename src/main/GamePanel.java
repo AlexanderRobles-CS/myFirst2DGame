@@ -20,6 +20,7 @@ public class GamePanel extends JPanel implements Runnable{
 	// SCREEN SETTINGS 
 	final int originalTileSize = 16;    // 16x16 tile
 	final int scale = 3;
+	private DisplayManager displayManager;
 	
 	public final int tileSize = originalTileSize * scale;
 	public final int maxScreenCol = 16;
@@ -59,6 +60,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int pauseState = 2;
 	public final int dialougeState = 3;
 	public final int deathState = 4;
+	public final int settingsState = 5;
 	
 	public GamePanel() {
 		
@@ -175,6 +177,13 @@ public class GamePanel extends JPanel implements Runnable{
 	    }
 	}
 
+	public void setDisplayManager(DisplayManager displayManager) {
+    	this.displayManager = displayManager;
+	}
+
+	public DisplayManager getDisplayManager() {
+		return displayManager;
+	}
 	
 	@Override
 	public void paintComponent(Graphics g) {

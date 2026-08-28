@@ -1,6 +1,7 @@
 package main;
 
-import java.awt.Dimension;
+import java.awt.Color;
+import java.awt.GridBagLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -12,7 +13,6 @@ public class Main {
     	
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setResizable(false);
         window.setTitle(gameTitle);
 
         ImageIcon icon = new ImageIcon(Main.class.getResource(playerIcon));
@@ -20,13 +20,14 @@ public class Main {
 
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);
-        window.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        window.setResizable(true);
-        window.setMinimumSize(new Dimension(800, 600));
-        window.setLocationRelativeTo(null);
-        window.setVisible(true);
+
+        DisplayManager displayManager = new DisplayManager(window, gamePanel, icon.getImage());
+        gamePanel.setDisplayManager(displayManager);
+        displayManager.hideCursor();
 
         gamePanel.setupGame();
+        displayManager.applyDisplayMode(SettingsManager.isFullscreen());
+
         gamePanel.startGameThread();
     }
 }

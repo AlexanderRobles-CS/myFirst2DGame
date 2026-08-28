@@ -25,6 +25,7 @@ public class UI {
     public static final int PAUSE_STATE = 2;
     public static final int DIALOUGE_STATE = 3;
     public static final int DEATH_STATE = 4;
+	public static final int SETTINGS_STATE = 5;
 	
 	public boolean messageOn = false;
 	public String message = "";
@@ -71,6 +72,10 @@ public class UI {
 		
 			case TITLE_STATE:
 				drawTitleScreen();
+				break;
+
+			case SETTINGS_STATE:
+				drawSettingsScreen();
 				break;
 		
 			case PLAY_STATE:
@@ -152,9 +157,9 @@ public class UI {
 		
 		// MENU
 		text = "NEW GAME";
-		g2.setFont(g2.getFont().deriveFont(Font.BOLD,32F));
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD,24F));
 		x = getXForCenteredText(text);
-		y += gp.tileSize * 4;
+		y += gp.tileSize * 3;
 		g2.drawString(text, x, y);
 		
 		// can change to draw image if you want!! TODO:
@@ -164,7 +169,7 @@ public class UI {
 		
 		// MENU
 		text = "LOAD GAME";
-		g2.setFont(g2.getFont().deriveFont(Font.BOLD,32F));
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
 		x = getXForCenteredText(text);
 		y += gp.tileSize;
 		g2.drawString(text, x, y);
@@ -172,18 +177,67 @@ public class UI {
 		if(commandNum == 1) {
 			g2.drawString(">", x - gp.tileSize, y);
 		}
-		
+
 		// MENU
-		text = "QUIT GAME";
-		g2.setFont(g2.getFont().deriveFont(Font.BOLD,32F));
+		text = "SETTINGS";
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
 		x = getXForCenteredText(text);
 		y += gp.tileSize;
 		g2.drawString(text, x, y);		
 		if(commandNum == 2) {
 			g2.drawString(">", x - gp.tileSize, y);
 		}
+		
+		// MENU
+		text = "QUIT GAME";
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+		x = getXForCenteredText(text);
+		y += gp.tileSize;
+		g2.drawString(text, x, y);		
+		if(commandNum == 3) {
+			g2.drawString(">", x - gp.tileSize, y);
+		}
 	
 	}
+
+public void drawSettingsScreen() {
+    // BACKGROUND COLOR
+    g2.setColor(new Color(0, 0, 0));
+    g2.fillRect(0, 0, gp.screenWidth + 100, gp.screenHeight);
+    
+    // TITLE NAME
+    g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
+    String text = "SETTINGS";
+    int x = getXForCenteredText(text);
+    int y = gp.tileSize * 3;
+    
+    // SHADOW
+    g2.setColor(Color.gray);
+    g2.drawString(text, x + 5, y + 5);
+    
+    // MAIN COLOR
+    g2.setColor(Color.white);
+    g2.drawString(text, x, y);
+
+    g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+    text = "Fullscreen: " + (SettingsManager.isFullscreen() ? "ON" : "OFF");
+    x = getXForCenteredText(text);
+    y += gp.tileSize * 3;
+    g2.drawString(text, x, y);
+
+    if (commandNum == 0) {
+        g2.drawString(">", x - gp.tileSize, y);
+    }
+
+    text = "Back to Title Screen";
+    x = getXForCenteredText(text);
+    y += gp.tileSize * 3;
+    g2.drawString(text, x, y);
+
+    if (commandNum == 1) {
+        g2.drawString(">", x - gp.tileSize, y);
+    }
+}
 	
 	public void drawPauseScreen() {
 		String text = "PAUSED";

@@ -33,14 +33,14 @@ public class KeyHandler implements KeyListener{
 			    	gp.ui.commandNum--;
 					gp.playSE(Sound.MENU_NAVIGATION);
 			    	if(gp.ui.commandNum < 0) {
-			    		gp.ui.commandNum = 2;
+			    		gp.ui.commandNum = 3;
 			    	}
 			        break;
 			        
 			    case KeyEvent.VK_S:
 			    	gp.ui.commandNum++;
 					gp.playSE(Sound.MENU_NAVIGATION);
-			    	if(gp.ui.commandNum > 2) {
+			    	if(gp.ui.commandNum > 3) {
 			    		gp.ui.commandNum = 0;
 			    	}
 			        break;
@@ -54,9 +54,53 @@ public class KeyHandler implements KeyListener{
 			    	if(gp.ui.commandNum == 1) {
 			    		// add later
 			    	}
-			    	
+					
+					// SETTINGS
 			    	if(gp.ui.commandNum == 2) {
+						gp.playSE(Sound.CONFIRMATION_SOUND);
+						gp.ui.commandNum = 0;
+			    		gp.gameState = gp.settingsState;
+			    	}
+					if(gp.ui.commandNum == 1) {
+			    		// add later
+			    	}
+			    	
+			    	if(gp.ui.commandNum == 3) {
 			    		System.exit(0);
+			    	}
+			        break;
+			}
+		}
+
+		// SETTINGS STATE
+		else if(gp.gameState == gp.settingsState) {
+			switch (code) {
+			    case KeyEvent.VK_W:
+			    	gp.ui.commandNum--;
+					gp.playSE(Sound.MENU_NAVIGATION);
+			    	if(gp.ui.commandNum < 1) {
+			    		gp.ui.commandNum = 0;
+			    	}
+			        break;
+			        
+			    case KeyEvent.VK_S:
+			    	gp.ui.commandNum++;
+					gp.playSE(Sound.MENU_NAVIGATION);
+			    	if(gp.ui.commandNum > 1) {
+			    		gp.ui.commandNum = 0;
+			    	}
+			        break;
+			        
+			    case KeyEvent.VK_ENTER:
+			    	if(gp.ui.commandNum == 0) {
+						gp.playSE(Sound.CONFIRMATION_SOUND);
+			    		gp.getDisplayManager().toggleFullscreen();
+			    	}
+
+					if(gp.ui.commandNum == 1) {
+			    		gp.playSE(Sound.CONFIRMATION_SOUND);
+						gp.ui.commandNum = 0;
+						gp.gameState = gp.titleState;
 			    	}
 			        break;
 			}
@@ -90,6 +134,7 @@ public class KeyHandler implements KeyListener{
 			    	
 			    	if(gp.ui.commandNum == 1) {
 			    		gp.gameState = gp.titleState;
+						gp.ui.commandNum = 0;
 			    		gp.stopMusic();
 			    		gp.playMusic(Sound.MAIN_THEME);
 			    	}
