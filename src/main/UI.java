@@ -270,22 +270,50 @@ public void drawSettingsScreen() {
 	}
 	
 	public void drawDialougeScreen() {
-		
 		// WINDOW
 		int x = gp.tileSize * 2;
 		int y = gp.tileSize / 2;
 		int width = gp.screenWidth - (gp.tileSize * 4);
 		int height = gp.tileSize * 4;
 		drawSubWindow(x, y, width, height);
-		
+
+		// TEXT SETTINGS
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 16F));
-		
-		x += gp.tileSize;
-		y += gp.tileSize;
-		
-		for(String line : currentDialouge.split("\n")) {
-			g2.drawString(line, x, y);
-			y += 40;
+
+		int textX = x + gp.tileSize;
+		int textY = y + gp.tileSize;
+
+		// Maximum width available for dialogue text
+		int textWidth = width - (gp.tileSize * 2);
+
+		// Split dialogue into words
+		String[] words = currentDialouge.split(" ");
+		String line = "";
+
+		for (String word : words) {
+
+			String testLine = line.isEmpty() ? word : line + " " + word;
+
+			// If adding this word would make the line too wide
+			if (g2.getFontMetrics().stringWidth(testLine) > textWidth) {
+
+				// Draw the current line
+				g2.drawString(line, textX, textY);
+
+				// Move down for the next line
+				textY += 40;
+
+				// Start a new line with the word
+				line = word;
+
+			} else {
+				line = testLine;
+			}
+		}
+
+		// Draw the final line
+		if (!line.isEmpty()) {
+			g2.drawString(line, textX, textY);
 		}
 	}
 	
