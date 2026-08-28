@@ -113,14 +113,14 @@ public class KeyHandler implements KeyListener{
 			    	gp.ui.commandNum--;
 					gp.playSE(Sound.MENU_NAVIGATION);
 			    	if(gp.ui.commandNum < 0) {
-			    		gp.ui.commandNum = 2;
+			    		gp.ui.commandNum = 1;
 			    	}
 			        break;
 			        
 			    case KeyEvent.VK_S:
 			    	gp.ui.commandNum++;
 					gp.playSE(Sound.MENU_NAVIGATION);
-			    	if(gp.ui.commandNum > 2) {
+			    	if(gp.ui.commandNum > 1) {
 			    		gp.ui.commandNum = 0;
 			    	}
 			        break;
