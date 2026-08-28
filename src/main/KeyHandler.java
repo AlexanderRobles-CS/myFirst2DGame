@@ -189,8 +189,19 @@ public class KeyHandler implements KeyListener{
 		
 		// PAUSE STATE
 		else if(gp.gameState == gp.pauseState) {
-			if(code == KeyEvent.VK_ESCAPE)
-				gp.gameState = gp.playState;
+			switch (code) {
+			    case KeyEvent.VK_ESCAPE:
+			    	gp.gameState = gp.playState;
+			        break;
+
+				case KeyEvent.VK_ENTER:
+					if (gp.ui.commandNum == 0) {
+						gp.gameState = gp.titleState;
+						gp.playSE(Sound.CONFIRMATION_SOUND);
+						gp.stopMusic();
+			    		gp.playMusic(Sound.MAIN_THEME);
+					}
+			}
 		}
 		
 		// DIALOUGE STATE

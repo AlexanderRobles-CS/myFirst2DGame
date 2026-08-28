@@ -9,7 +9,6 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-
 import object.OBJ_Heart;
 import object.SuperObject;
 
@@ -241,11 +240,33 @@ public void drawSettingsScreen() {
 	
 	public void drawPauseScreen() {
 		String text = "PAUSED";
-		g2.setFont(g2.getFont().deriveFont(Font.BOLD,32F));
+		// set opacity of screen
+		g2.setColor(new Color(0, 0, 0, 160));
+		g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+
+		// TITLE NAME
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
 		int x = getXForCenteredText(text);
-		int y = gp.screenHeight / 2 - gp.tileSize;
+		int y = gp.tileSize * 3;
 		
+		// SHADOW
+		g2.setColor(Color.gray);
+		g2.drawString(text, x + 5, y + 5);
+		
+		// MAIN COLOR
+		g2.setColor(Color.white);
 		g2.drawString(text, x, y);
+		
+
+		text = "Exit to Title Screen";
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD,32F));
+		x = getXForCenteredText(text);
+		y += gp.tileSize * 4;
+		g2.drawString(text, x, y);
+
+		if(commandNum == 0) {
+			g2.drawString(">", x - gp.tileSize, y);
+		}
 	}
 	
 	public void drawDialougeScreen() {
