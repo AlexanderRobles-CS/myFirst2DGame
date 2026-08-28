@@ -1,5 +1,7 @@
 package environment;
 
+import entity.Entity;
+import entity.NPC_Necromancer;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Composite;
@@ -14,7 +16,6 @@ import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 import java.util.ArrayList;
 import java.util.List;
-
 import main.GamePanel;
 import object.SuperObject;
 
@@ -75,6 +76,20 @@ public class Lighting {
                 int torchLightSize = (int) (baseLightSize + torch.getLightFlicker());
 
                 lights.add(new LightSource(cx, cy, torchLightSize));
+            }
+        }
+
+        for (Entity npc : gp.npc) {
+            if (npc != null && npc instanceof NPC_Necromancer) {
+                NPC_Necromancer necro = (NPC_Necromancer) npc;
+
+                int cx = npc.worldX - gp.player.worldX + gp.player.screenX + gp.tileSize / 2;
+                int cy = npc.worldY - gp.player.worldY + gp.player.screenY + gp.tileSize / 2;
+
+                int baseLightSize = gp.tileSize * 3;
+                int necroLightSize = (int) (baseLightSize + necro.getLightFlicker());
+
+                lights.add(new LightSource(cx, cy, necroLightSize));
             }
         }
 

@@ -1,11 +1,10 @@
 package object;
 
+import environment.LightFlicker;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Random;
 import javax.imageio.ImageIO;
-
 import main.GamePanel;
 
 public class OBJ_Torch extends SuperObject {
@@ -15,15 +14,7 @@ public class OBJ_Torch extends SuperObject {
     private int frameCounter = 0;
     private boolean increasing = true;
 
-    // ---- flicker state ----
-    private final Random rand = new Random();
-    private double flickerOffset = 0;   // current smoothed flicker value (in pixels)
-    private double flickerTarget = 0;   // where flickerOffset is heading
-    private int flickerCounter = 0;
-
-    private static final double FLICKER_RANGE = 30.0;   // max +/- pixels of radius jitter
-    private static final int FLICKER_RETARGET_FRAMES = 6; // how often to pick a new target
-    private static final double FLICKER_SMOOTHING = 0.50; // higher = snappier, lower = smoother
+    private final LightFlicker flicker = new LightFlicker(); // default 30px, 6 frames, 0.5 smoothing
 
     public OBJ_Torch(GamePanel gp) {
         super(gp);
@@ -45,7 +36,6 @@ public class OBJ_Torch extends SuperObject {
     }
 
     public void update() {
-        // sprite animation
         frameCounter++;
         if (frameCounter >= 25) {
             if (currentFrame == 3) increasing = false;
@@ -55,19 +45,11 @@ public class OBJ_Torch extends SuperObject {
             frameCounter = 0;
         }
 
-        // light flicker
-        flickerCounter++;
-        if (flickerCounter >= FLICKER_RETARGET_FRAMES) {
-            flickerTarget = (rand.nextDouble() * 2 - 1) * FLICKER_RANGE; // random value in [-RANGE, +RANGE]
-            flickerCounter = 0;
-        }
-        // smoothly ease toward the target instead of snapping, so it looks organic
-        flickerOffset += (flickerTarget - flickerOffset) * FLICKER_SMOOTHING;
+        flicker.update();
     }
 
-    // returns the current flicker offset in pixels, to be added to the light radius
     public double getLightFlicker() {
-        return flickerOffset;
+        return flicker.getOffset();
     }
 
     @Override

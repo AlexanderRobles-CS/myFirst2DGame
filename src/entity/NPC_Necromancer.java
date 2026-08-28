@@ -1,10 +1,13 @@
 package entity;
 
+import environment.LightFlicker;
 import java.util.Random;
-
 import main.GamePanel;
 
 public class NPC_Necromancer extends Entity{
+
+	private final LightFlicker flicker = new LightFlicker(12.0, 10, 0.25); // slow, subtle, sickly glow
+
 	
 	public NPC_Necromancer(GamePanel gp) {
 		super(gp);
@@ -66,7 +69,13 @@ public class NPC_Necromancer extends Entity{
 			
 			actionLookCounter = 0;
 		}
+
+		flicker.update();
 	}
+
+	 public double getLightFlicker() {
+        return flicker.getOffset();
+    }
 	
 	public void speak() {
 		super.speak();
