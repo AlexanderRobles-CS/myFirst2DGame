@@ -1,7 +1,5 @@
 package main;
 
-import java.awt.Color;
-import java.awt.GridBagLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
