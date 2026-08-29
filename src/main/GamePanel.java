@@ -38,8 +38,8 @@ public class GamePanel extends JPanel implements Runnable{
 	// SYSTEM
 	public TileManager tileM = new TileManager(this);
 	public KeyHandler keyH = new KeyHandler(this);
-	Sound music = new Sound();
-	Sound se = new Sound();
+	Sound music = new Sound(false);
+	Sound se = new Sound(true);
 	public CollisionChecker cChecker = new CollisionChecker(this);
 	public AssetSetter aSetter = new AssetSetter(this);
 	public UI ui = new UI(this);
@@ -65,7 +65,6 @@ public class GamePanel extends JPanel implements Runnable{
 	public GamePanel() {
 		
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
-		this.music.setVolume(this.music.getVolume());
 		this.setBackground(Color.black);
 		this.setDoubleBuffered(true);
 		this.addKeyListener(keyH);
@@ -75,6 +74,7 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	public void playMusic(int i) {
 		music.setFile(i);
+		music.refreshVolume();
 		music.play();
 		music.loop();
 	}
@@ -85,6 +85,7 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	public void playSE(int i) {
 		se.setFile(i);
+		se.refreshVolume();
 		se.play();
 	}
 	

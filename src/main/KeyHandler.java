@@ -73,56 +73,70 @@ public class KeyHandler implements KeyListener{
 		}
 
 		// SETTINGS STATE
-		else if(gp.gameState == gp.settingsState) {
-			switch (code) {
-			    case KeyEvent.VK_W:
-			    	gp.ui.commandNum--;
-					gp.playSE(Sound.MENU_NAVIGATION);
-			    	if(gp.ui.commandNum < 2) {
-			    		gp.ui.commandNum = 0;
-			    	}
-			        break;
-			        
-			    case KeyEvent.VK_S:
-			    	gp.ui.commandNum++;
-					gp.playSE(Sound.MENU_NAVIGATION);
-			    	if(gp.ui.commandNum > 2) {
-			    		gp.ui.commandNum = 0;
-			    	}
-			        break;
+else if(gp.gameState == gp.settingsState) {
+	switch (code) {
+	    case KeyEvent.VK_W:
+	    	gp.ui.commandNum--;
+			gp.playSE(Sound.MENU_NAVIGATION);
+	    	if(gp.ui.commandNum < 0) {
+	    		gp.ui.commandNum = 3;
+	    	}
+	        break;
 
-				case KeyEvent.VK_A:
-					gp.playSE(Sound.MENU_NAVIGATION);
-			    	if(gp.ui.commandNum == 1) {
-			    		int currentVolume = SettingsManager.getVolume();
-			    		int newVolume = Math.max(0, currentVolume - 1);
-			    		SettingsManager.setVolume(newVolume);
-			    		gp.music.setVolume(newVolume);
-			    	}
-			        break;
-					
-				case KeyEvent.VK_D:
-					gp.playSE(Sound.MENU_NAVIGATION);
-			    	if(gp.ui.commandNum == 1) {
-			    		int currentVolume = SettingsManager.getVolume();
-			    		int newVolume = Math.min(100, currentVolume + 1);
-			    		SettingsManager.setVolume(newVolume);
-			    		gp.music.setVolume(newVolume);
-			    	}
-			        break;
-			        
-			    case KeyEvent.VK_ENTER:
-			    	if(gp.ui.commandNum == 0) {
-						gp.playSE(Sound.CONFIRMATION_SOUND);
-			    		gp.getDisplayManager().toggleFullscreen();
-			    	}
+	    case KeyEvent.VK_S:
+	    	gp.ui.commandNum++;
+			gp.playSE(Sound.MENU_NAVIGATION);
+	    	if(gp.ui.commandNum > 3) {
+	    		gp.ui.commandNum = 0;
+	    	}
+	        break;
 
-					if(gp.ui.commandNum == 2) {
-			    		gp.playSE(Sound.CONFIRMATION_SOUND);
-						gp.ui.commandNum = 0;
-						gp.gameState = gp.titleState;
-			    	}
-			        break;
+		case KeyEvent.VK_A:
+			gp.playSE(Sound.MENU_NAVIGATION);
+			if(gp.ui.commandNum == 1) {
+				int currentVolume = SettingsManager.getVolume();
+				int newVolume = Math.max(0, currentVolume - 1);
+				SettingsManager.setVolume(newVolume);
+				gp.music.refreshVolume();
+				gp.se.refreshVolume(); // master changed, so sfx effective volume changes too
+			}
+			if(gp.ui.commandNum == 2) {
+				int currentSfx = SettingsManager.getSfxVolume();
+				int newSfx = Math.max(0, currentSfx - 1);
+				SettingsManager.setSfxVolume(newSfx);
+				gp.se.refreshVolume();
+			}
+			break;
+
+		case KeyEvent.VK_D:
+			gp.playSE(Sound.MENU_NAVIGATION);
+			if(gp.ui.commandNum == 1) {
+				int currentVolume = SettingsManager.getVolume();
+				int newVolume = Math.min(100, currentVolume + 1);
+				SettingsManager.setVolume(newVolume);
+				gp.music.refreshVolume();
+				gp.se.refreshVolume();
+			}
+			if(gp.ui.commandNum == 2) {
+				int currentSfx = SettingsManager.getSfxVolume();
+				int newSfx = Math.min(100, currentSfx + 1);
+				SettingsManager.setSfxVolume(newSfx);
+				gp.se.refreshVolume();
+			}
+				break;
+
+	    case KeyEvent.VK_ENTER:
+	    	if(gp.ui.commandNum == 0) {
+				gp.playSE(Sound.CONFIRMATION_SOUND);
+	    		gp.getDisplayManager().toggleFullscreen();
+	    	}
+
+			if(gp.ui.commandNum == 3) {
+	    		gp.playSE(Sound.CONFIRMATION_SOUND);
+				gp.ui.commandNum = 0;
+				gp.gameState = gp.titleState;
+	    	}
+	        break;
 			}
 		}
 		
