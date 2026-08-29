@@ -32,9 +32,8 @@ public class Lighting {
         new Color(0,0,0,0.10f), new Color(0,0,0,0.42f), new Color(0,0,0,0.52f),
         new Color(0,0,0,0.61f), new Color(0,0,0,0.69f), new Color(0,0,0,0.76f),
         new Color(0,0,0,0.82f), new Color(0,0,0,0.87f), new Color(0,0,0,0.91f),
-        new Color(0,0,0,0.94f), new Color(0,0,0,0.96f), new Color(0,0,0,0.98f)
+        new Color(0,0,0,0.94f), new Color(0,0,0,0.97f), new Color(0,0,0,1.0f)
     };
-
     private static class LightSource {
         int x, y, size;
         LightSource(int x, int y, int size) { this.x = x; this.y = y; this.size = size; }
@@ -70,8 +69,7 @@ public class Lighting {
 
         for (SuperObject obj : gp.obj) {
             if (obj == null) continue;
-            if (obj instanceof object.OBJ_Torch) {
-                object.OBJ_Torch torch = (object.OBJ_Torch) obj;
+            if (obj instanceof object.OBJ_Torch torch) {
 
                 int cx = obj.worldX - gp.player.worldX + gp.player.screenX + gp.tileSize / 2;
                 int cy = obj.worldY - gp.player.worldY + gp.player.screenY + gp.tileSize / 2;

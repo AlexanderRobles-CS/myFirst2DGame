@@ -63,6 +63,14 @@ public class AssetSetter {
 		gp.obj[10].worldX = 26 * gp.tileSize;
 		gp.obj[10].worldY = 35 * gp.tileSize;
 
+		gp.obj[11] = new OBJ_Torch(gp);
+		gp.obj[11].worldX = 10 * gp.tileSize;
+		gp.obj[11].worldY = 29 * gp.tileSize;
+
+		gp.obj[12] = new OBJ_Torch(gp);
+		gp.obj[12].worldX = 44 * gp.tileSize;
+		gp.obj[12].worldY = 29 * gp.tileSize;
+
 	}
 	
 	public void setNPC() {
