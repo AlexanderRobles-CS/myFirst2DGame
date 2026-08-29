@@ -1,10 +1,10 @@
 package main;
 
 import java.net.URL;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 
 public class Sound {
 	
@@ -35,7 +35,7 @@ public class Sound {
 			soundURL[7]  = getClass().getResource("/sound/pantoman-monster-attack.wav");
 			soundURL[8]  = getClass().getResource("/sound/alphix-game-over.wav");
 			soundURL[9]  = getClass().getResource("/sound/soundreality-wrong-place.wav");
-			soundURL[10] = getClass().getResource("/sound/dragon-studio-scary-transition.wav");
+			soundURL[10] = getClass().getResource("/sound/virtual_vibes-okay-confirmation.wav");
 			soundURL[11] = getClass().getResource("/sound/freesound_community-menu-selection.wav");
 
 		}
@@ -62,5 +62,22 @@ public class Sound {
 		
 		public void stop() {
 			clip.stop();
+		}
+
+		public void setVolume(int volume) {
+		    if (clip != null) {
+		        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+		        float dB = (float) (Math.log10(volume / 100.0) * 20.0);
+		        gainControl.setValue(dB);
+		    }
+		}
+
+		public int getVolume() {
+		    if (clip != null) {
+		        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+		        float dB = gainControl.getValue();
+		        return (int) Math.pow(10.0, dB / 20.0) * 100;
+		    }
+		    return 100;
 		}
 }

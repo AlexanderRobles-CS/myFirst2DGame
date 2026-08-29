@@ -78,7 +78,7 @@ public class KeyHandler implements KeyListener{
 			    case KeyEvent.VK_W:
 			    	gp.ui.commandNum--;
 					gp.playSE(Sound.MENU_NAVIGATION);
-			    	if(gp.ui.commandNum < 1) {
+			    	if(gp.ui.commandNum < 2) {
 			    		gp.ui.commandNum = 0;
 			    	}
 			        break;
@@ -86,8 +86,28 @@ public class KeyHandler implements KeyListener{
 			    case KeyEvent.VK_S:
 			    	gp.ui.commandNum++;
 					gp.playSE(Sound.MENU_NAVIGATION);
-			    	if(gp.ui.commandNum > 1) {
+			    	if(gp.ui.commandNum > 2) {
 			    		gp.ui.commandNum = 0;
+			    	}
+			        break;
+
+				case KeyEvent.VK_A:
+					gp.playSE(Sound.MENU_NAVIGATION);
+			    	if(gp.ui.commandNum == 1) {
+			    		int currentVolume = SettingsManager.getVolume();
+			    		int newVolume = Math.max(0, currentVolume - 10);
+			    		SettingsManager.setVolume(newVolume);
+			    		gp.music.setVolume(newVolume);
+			    	}
+			        break;
+					
+				case KeyEvent.VK_D:
+					gp.playSE(Sound.MENU_NAVIGATION);
+			    	if(gp.ui.commandNum == 1) {
+			    		int currentVolume = SettingsManager.getVolume();
+			    		int newVolume = Math.min(100, currentVolume + 10);
+			    		SettingsManager.setVolume(newVolume);
+			    		gp.music.setVolume(newVolume);
 			    	}
 			        break;
 			        
@@ -97,7 +117,7 @@ public class KeyHandler implements KeyListener{
 			    		gp.getDisplayManager().toggleFullscreen();
 			    	}
 
-					if(gp.ui.commandNum == 1) {
+					if(gp.ui.commandNum == 2) {
 			    		gp.playSE(Sound.CONFIRMATION_SOUND);
 						gp.ui.commandNum = 0;
 						gp.gameState = gp.titleState;
@@ -136,7 +156,7 @@ public class KeyHandler implements KeyListener{
 			    		gp.gameState = gp.titleState;
 						gp.ui.commandNum = 0;
 			    		gp.stopMusic();
-			    		gp.playMusic(Sound.MAIN_THEME);
+			    		gp.playMusic(Sound.EERIE_MUSIC);
 			    	}
 			        break;
 			}
@@ -199,7 +219,7 @@ public class KeyHandler implements KeyListener{
 						gp.gameState = gp.titleState;
 						gp.playSE(Sound.CONFIRMATION_SOUND);
 						gp.stopMusic();
-			    		gp.playMusic(Sound.MAIN_THEME);
+			    		gp.playMusic(Sound.EERIE_MUSIC);
 					}
 			}
 		}

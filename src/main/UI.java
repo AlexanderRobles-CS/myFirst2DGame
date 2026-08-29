@@ -228,12 +228,21 @@ public void drawSettingsScreen() {
         g2.drawString(">", x - gp.tileSize, y);
     }
 
+	text = "Volume: " + SettingsManager.getVolume() + "%";
+	x = getXForCenteredText(text);
+	y += gp.tileSize;
+	g2.drawString(text, x, y);
+
+	if (commandNum == 1) {
+		g2.drawString(">", x - gp.tileSize, y);
+	}
+
     text = "Back to Title Screen";
     x = getXForCenteredText(text);
     y += gp.tileSize * 3;
     g2.drawString(text, x, y);
 
-    if (commandNum == 1) {
+    if (commandNum == 2) {
         g2.drawString(">", x - gp.tileSize, y);
     }
 }

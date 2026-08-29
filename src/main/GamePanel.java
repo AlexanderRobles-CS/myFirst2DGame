@@ -65,6 +65,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public GamePanel() {
 		
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
+		this.music.setVolume(this.music.getVolume());
 		this.setBackground(Color.black);
 		this.setDoubleBuffered(true);
 		this.addKeyListener(keyH);
@@ -88,7 +89,7 @@ public class GamePanel extends JPanel implements Runnable{
 	}
 	
 	public void setupGame() {
-		playMusic(Sound.MAIN_THEME);
+		playMusic(Sound.EERIE_MUSIC);
 		aSetter.setObject();
 		aSetter.setNPC();
 		aSetter.setMonster();
@@ -114,8 +115,6 @@ public class GamePanel extends JPanel implements Runnable{
 	    gameState = playState;
 	}
 
-
-	
 	public void startGameThread() {
 		
 		gameThread = new Thread(this);
