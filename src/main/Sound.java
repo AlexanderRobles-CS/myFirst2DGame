@@ -42,13 +42,15 @@ public class Sound {
 		
 		public void setFile(int i) {
 			try {
-				
 				AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
 				clip = AudioSystem.getClip();
 				clip.open(ais);
-				
-			}catch(Exception e) {
-				
+
+				// Load saved volume
+				setVolume(SettingsManager.getVolume());
+
+			} catch(Exception e) {
+				e.printStackTrace();
 			}
 		}
 		

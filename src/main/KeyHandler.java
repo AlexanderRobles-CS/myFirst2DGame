@@ -95,7 +95,7 @@ public class KeyHandler implements KeyListener{
 					gp.playSE(Sound.MENU_NAVIGATION);
 			    	if(gp.ui.commandNum == 1) {
 			    		int currentVolume = SettingsManager.getVolume();
-			    		int newVolume = Math.max(0, currentVolume - 10);
+			    		int newVolume = Math.max(0, currentVolume - 1);
 			    		SettingsManager.setVolume(newVolume);
 			    		gp.music.setVolume(newVolume);
 			    	}
@@ -105,7 +105,7 @@ public class KeyHandler implements KeyListener{
 					gp.playSE(Sound.MENU_NAVIGATION);
 			    	if(gp.ui.commandNum == 1) {
 			    		int currentVolume = SettingsManager.getVolume();
-			    		int newVolume = Math.min(100, currentVolume + 10);
+			    		int newVolume = Math.min(100, currentVolume + 1);
 			    		SettingsManager.setVolume(newVolume);
 			    		gp.music.setVolume(newVolume);
 			    	}
